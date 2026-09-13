@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Smart Sustainable Hostel Management System</title>
+    <link rel="stylesheet" href="style.css?v=2026_warm_v2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body class="theme-warm">
+    <!-- Application Root Container -->
+    <div id="app" class="app-root">
+
+        <!-- 1. PUBLIC LANDING PAGE (Initial Screen) -->
+        <div id="landing-view" class="view-container active">
+            <!-- Landing Navigation Bar -->
+            <header class="landing-nav">
+                <div class="landing-nav-brand">
+                    <span class="brand-logo-icon">🌿</span>
+                    <div class="brand-text-col">
+                        <span class="brand-title">Smart Sustainable Hostel</span>
+                        <span class="brand-sub">Campus Living &amp; Resource Suite</span>
+                    </div>
+                </div>
+                <div class="landing-nav-actions">
+                    <button class="theme-toggle-btn" id="landing-theme-toggle" onclick="toggleTheme()" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+                        <svg class="theme-icon-sun" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                        <svg class="theme-icon-moon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                    </button>
+                    <button class="btn btn-primary" onclick="showLoginView()">Sign In →</button>
+                </div>
+            </header>
+
+            <!-- Hero Banner with Botanical Illustration -->
+            <section class="landing-hero">
+                <div class="hero-content-col">
+                    <div class="hero-badge">RESIDENTIAL CAMPUS MANAGEMENT PLATFORM</div>
+                    <h1 class="hero-title">Hostel Management, Minus the Hassle.</h1>
+                    <p class="hero-description">
+                        Room allocation, fee tracking, complaints, and sustainability monitoring, all handled in one place, so wardens and students spend less time on admin and more time on everything else.
+                    </p>
+                    <div class="hero-cta-group">
+                        <button class="btn btn-primary btn-lg" onclick="showLoginView()">Sign In to Portal →</button>
+                        <a href="#features-section" class="btn btn-secondary btn-lg">Explore Capabilities ↓</a>
+                    </div>
+                </div>
+                <div class="hero-botanical-art" aria-hidden="true">
+                    <img src="botanical-branch.png" alt="Botanical watercolor leaf illustration" class="botanical-illustration-img">
+                </div>
+            </section>
+
+            <!-- Feature Highlight Cards (Core Capabilities) -->
+            <section id="features-section" class="landing-features">
+                <div class="features-header">
+                    <span class="section-tag">CORE CAPABILITIES</span>
+                    <h2 class="section-title">Harmonious Living Built for Campus Scale</h2>
+                </div>
+
+                <div class="features-grid">
+                    <!-- 1. Sustainability & Utility Monitoring -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                        </div>
+                        <h3 class="feature-heading">Sustainability &amp; Utility Monitoring</h3>
+                        <p class="feature-text">Water and electricity tracked live, wing by wing.</p>
+                    </div>
+
+                    <!-- 2. Room & Bed Allocation -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+                        </div>
+                        <h3 class="feature-heading">Room &amp; Bed Allocation</h3>
+                        <p class="feature-text">Real-time occupancy across every wing.</p>
+                    </div>
+
+                    <!-- 3. Fee & Payment Tracking -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/><path d="M7 15h2"/><path d="M14 15h3"/></svg>
+                        </div>
+                        <h3 class="feature-heading">Fee &amp; Payment Tracking</h3>
+                        <p class="feature-text">Dues, history, and receipts, always up to date.</p>
+                    </div>
+
+                    <!-- 4. Complaint & Maintenance -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        </div>
+                        <h3 class="feature-heading">Complaint &amp; Maintenance</h3>
+                        <p class="feature-text">Raised, tracked, and resolved without the runaround.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="landing-footer">
+                <p>© 2026 Smart Sustainable Hostel Management System. Crafted for academic communities.</p>
+            </footer>
+        </div>
+
+        <!-- 2. SIMPLIFIED SIGN-IN & SELF-SERVICE SIGN-UP SCREEN -->
+        <div id="login-view" class="view-container">
+            <div class="login-card">
+                <!-- STEP A: Role Selection (3 choices) -->
+                <div id="login-role-selection" class="login-step">
+                    <div class="login-brand">
+                        <span class="badge-pill primary">CAMPUS LIVING PORTAL</span>
+                        <h2 class="login-title">Choose Workspace</h2>
+                        <p class="login-sub">Select your institutional role to continue</p>
+                    </div>
+
+                    <div class="role-cards-grid">
+                        <div class="role-card" onclick="selectLoginRole('ADMIN')">
+                            <div class="role-card-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </div>
+                            <div class="role-card-info">
+                                <h3 class="role-card-title">Administrator</h3>
+                                <p class="role-card-desc">Full governance, student roster, room inventory, analytics, and user accounts</p>
+                            </div>
+                            <span class="role-card-arrow">→</span>
+                        </div>
+
+                        <div class="role-card" onclick="selectLoginRole('WARDEN')">
+                            <div class="role-card-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <div class="role-card-info">
+                                <h3 class="role-card-title">Hostel Warden</h3>
+                                <p class="role-card-desc">Daily triage, security gate logs, outstation leaves, and facility maintenance</p>
+                            </div>
+                            <span class="role-card-arrow">→</span>
+                        </div>
+
+                        <div class="role-card" onclick="selectLoginRole('STUDENT')">
+                            <div class="role-card-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                            </div>
+                            <div class="role-card-info">
+                                <h3 class="role-card-title">Hostel Resident</h3>
+                                <p class="role-card-desc">Room profile, fee portal with digital receipts, leave passes, and complaints</p>
+                            </div>
+                            <span class="role-card-arrow">→</span>
+                        </div>
+                    </div>
+
+                    <div class="login-footer-nav">
+                        <button class="btn btn-ghost" onclick="showLandingView()">← Back to Overview</button>
+                    </div>
+                </div>
+
+                <!-- STEP B: Authenticate Form (Sign In & Self-Service Sign Up) -->
+                <div id="login-credentials-step" class="login-step" style="display: none;">
+                    <div class="login-brand">
+                        <button class="back-role-btn" onclick="backToRoleSelect()">← Change Role</button>
+                        <span id="selected-role-badge" class="badge-pill primary">ADMINISTRATOR</span>
+                        <h2 class="login-title" id="auth-heading">Sign In</h2>
+                        <p id="selected-role-sub" class="login-sub">Enter your credentials to access your workspace</p>
+                    </div>
+
+                    <!-- Auth Mode Toggle: Sign In vs Create Account -->
+                    <div class="auth-segmented-control">
+                        <button type="button" class="segment-btn active" id="btn-mode-signin" onclick="switchAuthMode('SIGN_IN')">Sign In</button>
+                        <button type="button" class="segment-btn" id="btn-mode-signup" onclick="switchAuthMode('SIGN_UP')">Create Account</button>
+                    </div>
+
+                    <!-- Inline Error Banner -->
+                    <div id="login-error-banner" class="alert-banner danger" style="display: none;">
+                        <span class="alert-icon">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        </span>
+                        <span id="login-error-text">Invalid credentials.</span>
+                    </div>
+
+                    <!-- Inline Success Banner -->
+                    <div id="login-success-banner" class="alert-banner success" style="display: none;">
+                        <span class="alert-icon">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        </span>
+                        <span id="login-success-text">Account created successfully!</span>
+                    </div>
+
+                    <!-- Form 1: Sign In -->
+                    <form id="login-form" onsubmit="handleLogin(event)">
+                        <input type="hidden" id="login-role" value="ADMIN">
+
+                        <div class="form-group">
+                            <label class="form-label" id="login-username-label">Username or Email</label>
+                            <input type="text" id="login-username" class="form-control" placeholder="Enter username or email" required autocomplete="username">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <div class="password-input-wrap">
+                                <input type="password" id="login-password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+                                <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('login-password', this)" title="Toggle password visibility" aria-label="Toggle password visibility">
+                                    <svg class="eye-open" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    <svg class="eye-closed" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-block">Sign In →</button>
+                        </div>
+
+                        <div class="forgot-pass-container">
+                            <a href="javascript:void(0)" onclick="handleForgotPassword()" class="link-muted">Forgot password?</a>
+                        </div>
+                    </form>
+
+                    <!-- Form 2: Self-Service Sign Up (All 3 Roles) -->
+                    <form id="signup-form" onsubmit="handleSignUp(event)" style="display: none;">
+                        <input type="hidden" id="signup-role" value="ADMIN">
+
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" id="signup-fullname" class="form-control" placeholder="e.g. Dr. Jane Cooper" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Institutional Email Address</label>
+                            <input type="email" id="signup-email" class="form-control" placeholder="e.g. j.cooper@hostel.edu" required autocomplete="email">
+                            <small class="form-hint">Must be a valid email format</small>
+                        </div>
+
+                        <div id="signup-student-extra" class="form-group" style="display: none;">
+                            <label class="form-label">Roll Number / Student ID</label>
+                            <input type="text" id="signup-roll" class="form-control" placeholder="e.g. 2024CS105">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <div class="password-input-wrap">
+                                <input type="password" id="signup-password" class="form-control" placeholder="Create a secure password" required autocomplete="new-password">
+                                <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('signup-password', this)" title="Toggle password visibility" aria-label="Toggle password visibility">
+                                    <svg class="eye-open" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    <svg class="eye-closed" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-block">Create Account →</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. DESKTOP APPLICATION SHELL -->
+        <div id="shell-view" class="view-container">
+            <!-- Botanical Watermark Motif (Subtle, Reactive in Light & Dark Mode) -->
+            <div class="shell-botanical-watermark" aria-hidden="true"></div>
+
+            <!-- Persistent Sidebar -->
+            <aside class="app-sidebar">
+                <div class="sidebar-brand">
+                    <span class="brand-tag">🌿 ECO-LIVING</span>
+                    <h2 class="brand-name">Hostel Suite</h2>
+                    <span id="sidebar-role-badge" class="brand-role">ADMINISTRATOR</span>
+                </div>
+
+                <nav id="sidebar-nav" class="sidebar-nav">
+                    <!-- Injected dynamically by role with SVG icons -->
+                </nav>
+
+                <div class="sidebar-footer">
+                    <button class="nav-item logout-btn" onclick="handleLogout()">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        </span>
+                        <span class="nav-label">Logout Session</span>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Shell Canvas -->
+            <div class="app-main-canvas">
+                <!-- Persistent Header -->
+                <header class="app-header">
+                    <div class="header-left">
+                        <h2 id="header-page-title" class="page-title">Executive Dashboard</h2>
+                        <span id="header-page-sub" class="page-sub">Campus hostel operations, metrics overview, and today's priority actions</span>
+                    </div>
+
+                    <div class="header-right">
+                        <!-- Whole-app Light/Dark Toggle -->
+                        <button class="theme-toggle-btn" id="app-theme-toggle" onclick="toggleTheme()" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+                            <svg class="theme-icon-sun" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            <svg class="theme-icon-moon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                        </button>
+
+                        <!-- Notification Bell Popover -->
+                        <div class="notif-wrapper">
+                            <button class="icon-btn notif-btn" onclick="toggleNotifDropdown()" aria-label="Notifications">
+                                <span class="btn-icon">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                                </span>
+                                <span id="header-notif-badge" class="badge-count" style="display: none;">0</span>
+                            </button>
+
+                            <div id="notif-dropdown" class="dropdown-panel notif-panel" style="display: none;">
+                                <div class="dropdown-header">
+                                    <h4>Recent Notifications</h4>
+                                    <a href="javascript:void(0)" onclick="navigateTo('NOTIFICATIONS')" class="link-primary">View All →</a>
+                                </div>
+                                <div id="notif-dropdown-list" class="dropdown-list">
+                                    <!-- Dynamic -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profile Account Pill & Dropdown -->
+                        <div class="profile-wrapper">
+                            <div class="profile-pill" onclick="toggleProfileDropdown()">
+                                <div id="user-avatar-initial" class="user-avatar">S</div>
+                                <div class="user-meta">
+                                    <span id="user-display-name" class="user-name">Dr. Sarah Jenkins</span>
+                                    <span id="user-display-role" class="badge-role">Administrator</span>
+                                </div>
+                                <span class="chevron">▾</span>
+                            </div>
+
+                            <div id="profile-dropdown" class="dropdown-panel profile-panel" style="display: none;">
+                                <div class="dropdown-meta">
+                                    <strong id="drop-user-name">Dr. Sarah Jenkins</strong>
+                                    <small id="drop-user-email">admin@hostel.edu</small>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0)" class="dropdown-item danger" onclick="handleLogout()">
+                                    <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                                    Logout Session
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Dynamic Module Content Area -->
+                <main id="content-area" class="app-content-area">
+                    <!-- Rendered dynamically -->
+                </main>
+            </div>
+        </div>
+
+        <!-- 4. UNIFIED APP MODAL DIALOG CONTAINER -->
+        <div id="modal-overlay" class="modal-overlay" style="display: none;">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <div>
+                        <h3 id="modal-title" class="modal-title">Form Title</h3>
+                        <p id="modal-sub" class="modal-sub">Form description details</p>
+                    </div>
+                    <button class="btn-close" onclick="closeModal()">✕</button>
+                </div>
+                <div id="modal-body" class="modal-body">
+                    <!-- Injected dynamically -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button id="modal-primary-btn" class="btn btn-primary" onclick="submitActiveModal()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. SIMULATED RAZORPAY TEST-MODE GATEWAY MODAL -->
+        <div id="razorpay-modal-overlay" class="modal-overlay" style="display: none;">
+            <div class="modal-card razorpay-modal-card">
+                <!-- Header -->
+                <div class="razorpay-modal-header">
+                    <div class="razorpay-brand-box">
+                        <span class="rzp-logo-text">Razorpay</span>
+                        <span class="rzp-badge-test">TEST MODE</span>
+                    </div>
+                    <button class="btn-close" onclick="closeRazorpayModal()">✕</button>
+                </div>
+
+                <!-- Merchant & Amount Sub-header -->
+                <div class="rzp-amount-bar">
+                    <div>
+                        <div class="rzp-merchant-title">Smart Sustainable Hostel</div>
+                        <div class="rzp-key-indicator">Key: <code id="rzp-display-key">rzp_test_HostelDemo2026Key</code></div>
+                    </div>
+                    <div class="rzp-amount-display" id="rzp-amount-value">₹0</div>
+                </div>
+
+                <!-- Modal Body with Tabs -->
+                <div id="rzp-body-content" class="razorpay-body">
+                    <div class="rzp-tabs-bar">
+                        <button class="rzp-tab-btn active" onclick="switchRzpTab('UPI')">UPI / QR</button>
+                        <button class="rzp-tab-btn" onclick="switchRzpTab('CARD')">Cards</button>
+                        <button class="rzp-tab-btn" onclick="switchRzpTab('NETBANKING')">NetBanking</button>
+                    </div>
+
+                    <!-- UPI TAB -->
+                    <div id="rzp-tab-upi" class="rzp-tab-panel active">
+                        <div class="form-group">
+                            <label class="form-label">Virtual Payment Address (VPA) / UPI ID</label>
+                            <input type="text" id="rzp-upi-id" class="form-control" value="student@okhdfcbank" placeholder="name@upi">
+                        </div>
+                        <div class="rzp-qr-box">
+                            <div class="rzp-qr-visual">QR Code</div>
+                            <small class="text-muted">Scan with Google Pay, PhonePe, or Paytm in test mode</small>
+                        </div>
+                    </div>
+
+                    <!-- CARD TAB -->
+                    <div id="rzp-tab-card" class="rzp-tab-panel" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label">Card Number</label>
+                            <input type="text" id="rzp-card-number" class="form-control" value="4111 2222 3333 4444" placeholder="4111 2222 3333 4444">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <div class="form-group">
+                                <label class="form-label">Expiry (MM/YY)</label>
+                                <input type="text" id="rzp-card-exp" class="form-control" value="12/28" placeholder="MM/YY">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">CVV</label>
+                                <input type="password" id="rzp-card-cvv" class="form-control" value="123" placeholder="123">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NETBANKING TAB -->
+                    <div id="rzp-tab-netbanking" class="rzp-tab-panel" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label">Select Bank</label>
+                            <select id="rzp-bank-select" class="form-control">
+                                <option value="HDFC">HDFC Bank</option>
+                                <option value="SBI">State Bank of India</option>
+                                <option value="ICICI">ICICI Bank</option>
+                                <option value="AXIS">Axis Bank</option>
+                                <option value="KOTAK">Kotak Mahindra Bank</option>
+                            </select>
+                        </div>
+                        <div class="alert-banner" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); font-size: 12px;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            Test banking simulation: Instant authorization without real money deduction.
+                        </div>
+                    </div>
+
+                    <!-- Action Button -->
+                    <div class="rzp-action-row">
+                        <button id="rzp-pay-submit-btn" class="btn btn-primary btn-block" onclick="processRazorpayPayment()">
+                            Complete Test Payment →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Success Receipt Screen -->
+                <div id="rzp-receipt-content" class="razorpay-receipt" style="display: none;">
+                    <div class="receipt-success-badge">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <h3 class="receipt-title">Payment Successful!</h3>
+                    <p class="receipt-sub">Verified &amp; settled via Razorpay Test Gateway</p>
+
+                    <div class="receipt-details-card">
+                        <div class="receipt-row">
+                            <span>Payment ID:</span>
+                            <strong id="rcpt-pay-id">pay_test_12345678</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span>Amount Paid:</span>
+                            <strong id="rcpt-amount">₹0</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span>Payment Method:</span>
+                            <strong id="rcpt-method">UPI</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span>Date &amp; Time:</span>
+                            <span id="rcpt-timestamp">Today</span>
+                        </div>
+                        <div class="receipt-row">
+                            <span>Status:</span>
+                            <span class="badge-pill success">CAPTURED (PAID)</span>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer" style="padding: 0; margin-top: 18px;">
+                        <button class="btn btn-primary btn-block" onclick="finishRazorpaySuccess()">Done &amp; View Ledger</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Alert Notification -->
+        <div id="toast" class="toast-popup" style="display: none;">
+            <span id="toast-icon">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span id="toast-message">Notification message</span>
+        </div>
+    </div>
+
+    <script src="app.js?v=2026_warm_v2"></script>
+</body>
+</html>
