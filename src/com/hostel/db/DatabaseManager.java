@@ -231,7 +231,7 @@ public class DatabaseManager {
             }
         }
 
-        // Seed Rooms (2 sample rooms)
+        // Seed Rooms (1 sample room)
         try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM rooms")) {
             if (rs.next() && rs.getInt(1) == 0) {
                 try (PreparedStatement ps = conn.prepareStatement(
@@ -247,23 +247,11 @@ public class DatabaseManager {
                     ps.setString(8, "PARTIAL");
                     ps.setString(9, "2 Study Desks, Attached Bath, Balcony");
                     ps.executeUpdate();
-
-                    // Room 2
-                    ps.setString(1, "B-201");
-                    ps.setString(2, "B Block (South Wing)");
-                    ps.setInt(3, 2);
-                    ps.setInt(4, 2);
-                    ps.setInt(5, 1);
-                    ps.setDouble(6, 55000.00);
-                    ps.setString(7, "AC 2-Sharing");
-                    ps.setString(8, "PARTIAL");
-                    ps.setString(9, "2 Study Desks, Air Conditioner, Attached Bath");
-                    ps.executeUpdate();
                 }
             }
         }
 
-        // Seed Students (2 sample students)
+        // Seed Students (1 sample student)
         try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM students")) {
             if (rs.next() && rs.getInt(1) == 0) {
                 try (PreparedStatement ps = conn.prepareStatement(
@@ -284,28 +272,11 @@ public class DatabaseManager {
                     ps.setString(13, "ACTIVE");
                     ps.setString(14, "2024-08-01");
                     ps.executeUpdate();
-
-                    // Student 2
-                    ps.setString(1, "STU-2024-002");
-                    ps.setString(2, "Priya Patel");
-                    ps.setString(3, "Electronics & Comm");
-                    ps.setString(4, "2nd Year");
-                    ps.setString(5, "+91 98765 43211");
-                    ps.setString(6, "priya.patel@college.edu");
-                    ps.setString(7, "+91 94432 23456");
-                    ps.setString(8, "+91 94432 23457");
-                    ps.setString(9, "B+");
-                    ps.setInt(10, 2);
-                    ps.setString(11, "B-201");
-                    ps.setString(12, "B Block (South Wing)");
-                    ps.setString(13, "ACTIVE");
-                    ps.setString(14, "2024-08-01");
-                    ps.executeUpdate();
                 }
             }
         }
 
-        // Seed Fee Records (2 sample records: 1 pending with balance for Razorpay, 1 fully paid)
+        // Seed Fee Records (1 sample record: pending with balance for Razorpay)
         try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM fee_records")) {
             if (rs.next() && rs.getInt(1) == 0) {
                 try (PreparedStatement ps = conn.prepareStatement(
@@ -321,19 +292,6 @@ public class DatabaseManager {
                     ps.setString(8, "PARTIAL");
                     ps.setString(9, "Fall 2026");
                     ps.setString(10, "2026-09-30");
-                    ps.executeUpdate();
-
-                    // Fee 2: Priya Patel (Paid in full)
-                    ps.setInt(1, 2);
-                    ps.setString(2, "Priya Patel");
-                    ps.setString(3, "STU-2024-002");
-                    ps.setString(4, "B-201");
-                    ps.setDouble(5, 55000.00);
-                    ps.setDouble(6, 55000.00);
-                    ps.setDouble(7, 0.00);
-                    ps.setString(8, "PAID");
-                    ps.setString(9, "Fall 2026");
-                    ps.setString(10, "2026-08-30");
                     ps.executeUpdate();
                 }
             }
@@ -355,57 +313,34 @@ public class DatabaseManager {
                     ps.setString(9, "Admin Office");
                     ps.setString(10, "Hostel admission installment");
                     ps.executeUpdate();
-
-                    ps.setInt(1, 2);
-                    ps.setInt(2, 2);
-                    ps.setString(3, "Priya Patel");
-                    ps.setString(4, "RCP-2026-002");
-                    ps.setDouble(5, 55000.00);
-                    ps.setString(6, "ONLINE_GATEWAY");
-                    ps.setString(7, "pay_demo_init_002");
-                    ps.setString(8, "2026-08-18 14:20:00");
-                    ps.setString(9, "Student Portal");
-                    ps.setString(10, "Annual fee settlement");
-                    ps.executeUpdate();
                 }
             }
         }
     }
 
     private void seedSecondaryModules() {
-        // Trimmed seed data (1-2 records per secondary module)
+        // Trimmed seed data: exactly 1 record per module across all roles
         visitors.put(1, new Visitor(1, "Rajesh Sharma", "+91 98220 11223", "Parent", 1, "Aarav Sharma", "A-101", "Routine family visit", "2026-09-07", "10:15", null, "National ID", "ID-901", Visitor.VisitorStatus.INSIDE, "Security Gate 1"));
-        visitors.put(2, new Visitor(2, "Sunita Patel", "+91 98220 44556", "Mother", 2, "Priya Patel", "B-201", "Delivering textbooks", "2026-09-07", "11:30", "12:45", "Driver License", "DL-902", Visitor.VisitorStatus.CHECKED_OUT, "Security Gate 1"));
 
         leaveRequests.put(1, new LeaveRequest(1, "LR-2024-101", 1, "Aarav Sharma", "STU-2024-001", "A-101", LeaveRequest.LeaveType.HOME_VISIT, "2026-09-18", "2026-09-21", "Family wedding function", "Mumbai", "+91 94432 12345", true, LeaveRequest.LeaveStatus.PENDING, "2026-09-07 09:20:00", null, "", null));
-        leaveRequests.put(2, new LeaveRequest(2, "LR-2024-102", 2, "Priya Patel", "STU-2024-002", "B-201", LeaveRequest.LeaveType.MEDICAL_LEAVE, "2026-09-10", "2026-09-12", "Medical checkup at home", "Pune", "+91 94432 23456", true, LeaveRequest.LeaveStatus.APPROVED, "2026-09-05 14:10:00", "Prof. Marcus Vance", "Approved. Submit medical certificate upon return.", "2026-09-05 16:00:00"));
 
         complaints.put(1, new Complaint(1, "CMP-2024-001", 1, "Aarav Sharma", "A-101", Complaint.Category.PLUMBING, "Bathroom tap is leaking continuously in Room A-101.", "High", "2026-09-06", "Ramesh (Plumber)", Complaint.Status.IN_PROGRESS, "Under inspection", null));
-        complaints.put(2, new Complaint(2, "CMP-2024-002", 2, "Priya Patel", "B-201", Complaint.Category.ELECTRICAL, "Ceiling fan making clicking sound at medium speed.", "Medium", "2026-09-04", "Campus Electrician", Complaint.Status.RESOLVED, "Capacitor replaced", "2026-09-05"));
 
         complianceRecords.add(new ComplianceRecord(1, 1, "Aarav Sharma", "STU-2024-001", "A-101", "Unauthorized Electrical Appliances", "2026-08-20", "Electric kettle found during routine inspection", "Written Warning Issued", 0.0, "Admin Safety Cell", true));
-        complianceRecords.add(new ComplianceRecord(2, 2, "Priya Patel", "STU-2024-002", "B-201", "Late Entry Violation", "2026-09-01", "Returned after 10:30 PM curfew without pass", "Parent Notified", 100.0, "Security Warden", false));
 
-        sustainabilityUsages.add(new SustainabilityUsage(1, "2026-08", "Aug 2026", 14200.0, 310.0, 13600.0, 300.0, "Normal campus operations", "2026-09-01", "Energy Officer"));
-        sustainabilityUsages.add(new SustainabilityUsage(2, "2026-09", "Sep 2026", 13800.0, 295.0, 14200.0, 310.0, "Efficiency drive active", "2026-09-07", "Energy Officer"));
+        sustainabilityUsages.add(new SustainabilityUsage(1, "2026-09", "Sep 2026", 13800.0, 295.0, 14200.0, 310.0, "Efficiency drive active", "2026-09-07", "Energy Officer"));
 
         assets.put(1, new Asset(1, "AST-FUR-101", "Air Conditioner 1.5 Ton", "Appliance", 1, "A-101", Asset.Condition.GOOD, "In Use", 35000.0, "2026-08-15", "Samsung Inverter Unit"));
-        assets.put(2, new Asset(2, "AST-FAC-102", "RO Water Purifier System", "Facility", 1, "Corridor-A1", Asset.Condition.UNDER_REPAIR, "In Use", 25000.0, "2026-09-01", "Filter replacement due"));
 
         notices.add(new Notice(1, "Eco-Living Energy Conservation Drive", "All residents are requested to turn off AC and lights when leaving rooms. Solar backup test scheduled this Saturday.", "Sustainability", Notice.Priority.HIGH, "Prof. Marcus Vance", "WARDEN", "2026-09-05", "ALL", true, false));
-        notices.add(new Notice(2, "Mess Committee Monthly Review", "Student representatives from all wings are invited to the dining hall at 7:00 PM for September menu updates.", "Mess", Notice.Priority.NORMAL, "Admin Office", "ADMIN", "2026-09-06", "ALL", true, false));
 
         messMenus.add(new MessMenu(1, "Monday", MessMenu.MealType.BREAKFAST, "Idli Sambar, Coconut Chutney, Banana & Masala Chai", "Kesari Bath", "07:30 AM - 09:15 AM", "Pure Veg"));
-        messMenus.add(new MessMenu(2, "Monday", MessMenu.MealType.LUNCH, "Paneer Butter Masala, Dal Tadka, Jeera Rice, Phulka & Curd", "Sweet Gulab Jamun", "12:30 PM - 02:30 PM", "Pure Veg"));
 
         messFeedbacks.add(new MessFeedback(1, 1, "Aarav Sharma", "A-101", "Lunch", 4, "Taste & Food Quality", "Lunch dal tadka was excellent.", false, "Reviewed", "2026-09-06"));
-        messFeedbacks.add(new MessFeedback(2, 2, "Priya Patel", "B-201", "Breakfast", 5, "Portion Sizing", "Fresh fruit options are appreciated.", false, "Received", "2026-09-07"));
 
         notifications.add(new Notification(1, 0, "ALL", "Energy Target Achieved", "Electricity consumption dropped by 2.8% this billing cycle.", Notification.NotificationType.SUSTAINABILITY, "2026-09-07 10:00:00", false, "MODULE_SUSTAINABILITY"));
-        notifications.add(new Notification(2, 0, "ALL", "New Notice Published", "Eco-Living Conservation drive guidelines posted.", Notification.NotificationType.NOTICE, "2026-09-07 09:00:00", false, "MODULE_NOTICES"));
 
         activityLogs.add(new ActivityLog(1, "2026-09-07 09:20:00", "Aarav Sharma", "STUDENT", "LEAVE_SUBMITTED", "Submitted leave request LR-2024-101", "LR-2024-101"));
-        activityLogs.add(new ActivityLog(2, "2026-09-07 10:15:00", "Prof. Marcus Vance", "WARDEN", "VISITOR_ENTRY", "Checked in visitor Rajesh Sharma for Aarav Sharma", "VP-901"));
     }
 
     public boolean attemptMySQLConnection() {

@@ -13,8 +13,7 @@ const DEFAULT_USERS = [
 ];
 
 const DEFAULT_STUDENTS = [
-    { id: "STU-1001", roll: "2024CS101", name: "Aarav Sharma", dept: "Computer Science", year: 3, roomNo: "A-101", bed: "Bed-A", contact: "+91 98765 43210", email: "aarav.sharma@hostel.edu", status: "ACTIVE" },
-    { id: "STU-1002", roll: "2024EC102", name: "Priya Patel", dept: "Electronics", year: 2, roomNo: "B-201", bed: "Bed-A", contact: "+91 98765 43211", email: "priya.p@hostel.edu", status: "ACTIVE" }
+    { id: "STU-1001", roll: "2024CS101", name: "Aarav Sharma", dept: "Computer Science", year: 3, roomNo: "A-101", bed: "Bed-A", contact: "+91 98765 43210", email: "aarav.sharma@hostel.edu", status: "ACTIVE" }
 ];
 
 function loadStoredUsers() {
@@ -40,10 +39,10 @@ function saveUsersToStorage() {
 
 function loadStoredStudents() {
     try {
-        const stored = localStorage.getItem("hostel_students");
+        const stored = localStorage.getItem("hostel_students_v3");
         if (stored) {
             const parsed = JSON.parse(stored);
-            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+            if (Array.isArray(parsed) && parsed.length === 1) return parsed;
         }
     } catch (e) {
         console.warn("Could not load students from localStorage", e);
@@ -53,7 +52,7 @@ function loadStoredStudents() {
 
 function saveStudentsToStorage() {
     try {
-        localStorage.setItem("hostel_students", JSON.stringify(STORE.students));
+        localStorage.setItem("hostel_students_v3", JSON.stringify(STORE.students));
     } catch (e) {
         console.warn("Could not save students to localStorage", e);
     }
@@ -65,43 +64,35 @@ const STORE = {
     students: loadStoredStudents(),
 
     rooms: [
-        { id: "RM-101", roomNo: "A-101", block: "A-Block", floor: 1, capacity: 2, occupied: 2, type: "DOUBLE_AC", status: "OCCUPIED" },
-        { id: "RM-201", roomNo: "B-201", block: "B-Block", floor: 2, capacity: 2, occupied: 1, type: "DOUBLE_NON_AC", status: "PARTIALLY_OCCUPIED" }
+        { id: "RM-101", roomNo: "A-101", block: "A-Block", floor: 1, capacity: 2, occupied: 2, type: "DOUBLE_AC", status: "OCCUPIED" }
     ],
 
     fees: [
-        { id: "FEE-01", studentId: "STU-1001", studentName: "Aarav Sharma", roomNo: "A-101", amount: 45000, paid: 25000, due: 20000, status: "PARTIAL", term: "Fall 2026", dueDate: "2026-08-30" },
-        { id: "FEE-02", studentId: "STU-1002", studentName: "Priya Patel", roomNo: "B-201", amount: 45000, paid: 45000, due: 0, status: "PAID", term: "Fall 2026", dueDate: "2026-08-30" }
+        { id: "FEE-01", studentId: "STU-1001", studentName: "Aarav Sharma", roomNo: "A-101", amount: 45000, paid: 25000, due: 20000, status: "PARTIAL", term: "Fall 2026", dueDate: "2026-08-30" }
     ],
 
     visitors: [
-        { id: "VIS-01", name: "Rajesh Sharma", relation: "Father", studentName: "Aarav Sharma", contact: "+91 98220 11223", checkIn: "2026-09-07 10:15", checkOut: null, status: "INSIDE", passNo: "VP-901" },
-        { id: "VIS-02", name: "Sunita Patel", relation: "Mother", studentName: "Priya Patel", contact: "+91 98220 44556", checkIn: "2026-09-07 11:30", checkOut: "2026-09-07 12:45", status: "CHECKED_OUT", passNo: "VP-902" }
+        { id: "VIS-01", name: "Rajesh Sharma", relation: "Father", studentName: "Aarav Sharma", contact: "+91 98220 11223", checkIn: "2026-09-07 10:15", checkOut: null, status: "INSIDE", passNo: "VP-901" }
     ],
 
     leaves: [
-        { id: "LV-101", studentId: "STU-1001", studentName: "Aarav Sharma", roomNo: "A-101", fromDate: "2026-09-12", toDate: "2026-09-15", reason: "Attending sister's wedding in Jaipur", status: "PENDING", appliedOn: "2026-09-07 09:20", remarks: "" },
-        { id: "LV-102", studentId: "STU-1002", studentName: "Priya Patel", roomNo: "B-201", fromDate: "2026-09-08", toDate: "2026-09-10", reason: "Medical checkup at hometown", status: "APPROVED", appliedOn: "2026-09-05 14:10", remarks: "Approved. Take medical certificate on return." }
+        { id: "LV-101", studentId: "STU-1001", studentName: "Aarav Sharma", roomNo: "A-101", fromDate: "2026-09-12", toDate: "2026-09-15", reason: "Attending sister's wedding in Jaipur", status: "PENDING", appliedOn: "2026-09-07 09:20", remarks: "" }
     ],
 
     complaints: [
-        { id: "CMP-01", studentName: "Aarav Sharma", roomNo: "A-101", category: "PLUMBING", desc: "Bathroom tap is leaking continuously in Room A-101.", priority: "HIGH", status: "IN_PROGRESS", reportedOn: "2026-09-06", assignedTo: "Ramesh (Plumber)" },
-        { id: "CMP-02", studentName: "Priya Patel", roomNo: "B-201", category: "ELECTRICAL", desc: "Ceiling fan making clicking noise at medium speed.", priority: "MEDIUM", status: "PENDING", reportedOn: "2026-09-07", assignedTo: "Unassigned" }
+        { id: "CMP-01", studentName: "Aarav Sharma", roomNo: "A-101", category: "PLUMBING", desc: "Bathroom tap is leaking continuously in Room A-101.", priority: "HIGH", status: "IN_PROGRESS", reportedOn: "2026-09-06", assignedTo: "Ramesh (Plumber)" }
     ],
 
     sustainability: [
-        { month: "Jul 2026", electricityKwh: 14500, waterKl: 355, eChange: 4.32, wChange: 4.41, isAnomaly: false },
         { month: "Aug 2026", electricityKwh: 17800, waterKl: 420, eChange: 22.76, wChange: 18.31, isAnomaly: true }
     ],
 
     assets: [
-        { id: "AST-01", name: "Air Conditioner 1.5 Ton", category: "APPLIANCE", roomNo: "A-101", condition: "GOOD", lastAudit: "2026-08-15" },
-        { id: "AST-02", name: "Study Table & Ergonomic Chair", category: "FURNITURE", roomNo: "A-101", condition: "GOOD", lastAudit: "2026-08-15" }
+        { id: "AST-01", name: "Air Conditioner 1.5 Ton", category: "APPLIANCE", roomNo: "A-101", condition: "GOOD", lastAudit: "2026-08-15" }
     ],
 
     notices: [
-        { id: "NOT-01", title: "Green Hostel Energy Conservation Drive", category: "SUSTAINABILITY", priority: "HIGH", date: "2026-09-05", content: "All residents are requested to turn off AC and lights when leaving rooms. Solar backup test scheduled this Saturday.", author: "Warden Office" },
-        { id: "NOT-02", title: "Mess Committee Monthly Review Meeting", category: "GENERAL", priority: "MEDIUM", date: "2026-09-06", content: "Student representatives from all wings are invited to the dining hall at 7:00 PM for September menu updates.", author: "Mess Secretary" }
+        { id: "NOT-01", title: "Green Hostel Energy Conservation Drive", category: "SUSTAINABILITY", priority: "HIGH", date: "2026-09-05", content: "All residents are requested to turn off AC and lights when leaving rooms. Solar backup test scheduled this Saturday.", author: "Warden Office" }
     ],
 
     messMenu: {
@@ -113,13 +104,11 @@ const STORE = {
     },
 
     notifications: [
-        { id: "NT-01", title: "Electricity Surge Warning", desc: "Aug 2026 energy consumption jumped by +22.8% MoM. Anomaly threshold (>15%) triggered.", time: "10 mins ago", read: false, type: "DANGER" },
-        { id: "NT-02", title: "New Leave Application", desc: "Aarav Sharma submitted a leave request for Jaipur trip (Sep 12-15).", time: "1 hour ago", read: false, type: "INFO" }
+        { id: "NT-01", title: "Electricity Surge Warning", desc: "Aug 2026 energy consumption jumped by +22.8% MoM. Anomaly threshold (>15%) triggered.", time: "10 mins ago", read: false, type: "DANGER" }
     ],
 
     activityLogs: [
-        { action: "LEAVE_APPLY", details: "Aarav Sharma applied for leave (Sep 12 to Sep 15)", user: "aarav", time: "Today 09:20" },
-        { action: "FEE_PAYMENT", details: "Recorded ₹25,000 fee payment for Aarav Sharma", user: "admin", time: "Today 08:30" }
+        { action: "LEAVE_APPLY", details: "Aarav Sharma applied for outstation leave (Sep 12 to Sep 15)", user: "aarav", time: "Today 09:20" }
     ]
 };
 
@@ -253,7 +242,10 @@ const SVG_ICONS = {
     eye: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`,
     eyeOff: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>`,
     sparkles: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>`,
-    plus: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`
+    plus: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`,
+    droplet: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>`,
+    zap: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+    menu: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`
 };
 
 function getIconSvg(name, size = 16) {
@@ -608,21 +600,60 @@ function renderSidebarNav() {
     navContainer.innerHTML = html;
 }
 
+function toggleSidebar() {
+    const sidebar = document.getElementById("app-sidebar");
+    if (!sidebar) return;
+    if (sidebar.classList.contains("open")) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+}
+
+function openSidebar() {
+    const sidebar = document.getElementById("app-sidebar");
+    const backdrop = document.getElementById("sidebar-backdrop");
+    if (sidebar) sidebar.classList.add("open");
+    if (backdrop) backdrop.classList.add("active");
+}
+
+function closeSidebar() {
+    const sidebar = document.getElementById("app-sidebar");
+    const backdrop = document.getElementById("sidebar-backdrop");
+    if (sidebar) sidebar.classList.remove("open");
+    if (backdrop) backdrop.classList.remove("active");
+}
+
+// Global Escape listener to close drawer and modals
+window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        closeSidebar();
+        closeModal();
+    }
+});
+
 function navigateTo(moduleId) {
     currentModuleId = moduleId;
     renderSidebarNav();
 
+    // Auto-close slide-out drawer when user navigates
+    closeSidebar();
+
     const allNavs = [...NAV_CONFIG.ADMIN, ...NAV_CONFIG.WARDEN, ...NAV_CONFIG.STUDENT];
     const meta = allNavs.find(n => n.id === moduleId) || { label: "Module", sub: "Hostel Management Suite" };
 
-    document.getElementById("header-page-title").innerText = meta.label;
-    document.getElementById("header-page-sub").innerText = meta.sub;
+    const titleEl = document.getElementById("header-page-title");
+    const subEl = document.getElementById("header-page-sub");
+    if (titleEl) titleEl.innerText = meta.label;
+    if (subEl) subEl.innerText = meta.sub;
 
     const canvas = document.getElementById("content-area");
-    canvas.innerHTML = getModuleHtml(moduleId);
+    if (canvas) canvas.innerHTML = getModuleHtml(moduleId);
 
-    document.getElementById("notif-dropdown").style.display = "none";
-    document.getElementById("profile-dropdown").style.display = "none";
+    const notifDrop = document.getElementById("notif-dropdown");
+    if (notifDrop) notifDrop.style.display = "none";
+    const profDrop = document.getElementById("profile-dropdown");
+    if (profDrop) profDrop.style.display = "none";
 }
 
 // ==========================================
@@ -775,17 +806,10 @@ function renderAdminDashboard() {
             </div>
         </div>
 
-        <!-- 2-Column Split: Sustainability Anomaly Widget & Recent Activity -->
+        <!-- 2-Column Split: Sustainability Pulse Widget & Recent Activity -->
         <div class="dual-layout">
-            <div class="card-panel">
-                <div class="card-header-row">
-                    <div>
-                        <h3 class="card-title">Campus Sustainability Pulse</h3>
-                        <p class="card-subtitle">Zero-hardware monthly manual utility tracker</p>
-                    </div>
-                    <button class="btn btn-primary btn-sm" onclick="openModal('ADD_UTILITY')">${getIconSvg('plus', 13)} Log Meter Read</button>
-                </div>
-                ${renderSustainabilityWidget()}
+            <div style="display: flex; flex-direction: column;">
+                ${renderResourceAnalyticsBox("Campus Sustainability Pulse", "Zero-hardware monthly manual utility & capacity tracker", "ADMIN")}
             </div>
 
             <div class="card-panel">
@@ -796,13 +820,13 @@ function renderAdminDashboard() {
                     </div>
                     <button class="btn btn-ghost btn-sm" onclick="navigateTo('REPORTS')">Audit Logs &rarr;</button>
                 </div>
-                <div class="dropdown-list" style="max-height: 260px;">
+                <div class="activity-stream-list" style="max-height: 290px; overflow-y: auto;">
                     ${STORE.activityLogs.map(log => `
                         <div class="notif-item">
-                            <strong style="color: var(--color-primary);">${formatEnumLabel(log.action)}</strong>
-                            <p style="margin: 3px 0; color: var(--text-primary);">${escapeHtml(log.details)}</p>
+                            <strong class="notif-action-title">${formatEnumLabel(log.action)}</strong>
+                            <p class="notif-details-text">${escapeHtml(log.details)}</p>
                             <div class="notif-meta">
-                                <span>Actor: <b>${escapeHtml(log.user)}</b></span>
+                                <span>Actor: <b class="notif-actor-badge">${escapeHtml(log.user)}</b></span>
                                 <span>${escapeHtml(log.time)}</span>
                             </div>
                         </div>
@@ -912,6 +936,9 @@ function renderWardenDashboard() {
                 </div>
             </div>
         </div>
+
+        <!-- Warden Campus Resource Analysis Widget -->
+        ${renderResourceAnalyticsBox("Campus Resource Analysis", "Monthly hostel capacity, water consumption, and electricity tracking", "WARDEN")}
     `;
 }
 
@@ -962,6 +989,9 @@ function renderStudentDashboard() {
             </div>
         </div>
 
+        <!-- Student Campus Services Analytics Box -->
+        ${renderResourceAnalyticsBox("Campus Services Analytics", "Real-time hostel utilities, water allocation, and residential capacity metrics", "STUDENT")}
+
         <div class="dual-layout">
             <div class="card-panel">
                 <div class="card-header-row">
@@ -994,72 +1024,126 @@ function renderStudentDashboard() {
     `;
 }
 
-// 6.4 SUSTAINABILITY WIDGET & PANEL
-function renderSustainabilityWidget() {
-    const maxKwh = 22000;
-    const maxKl = 500;
+// Universal High-Contrast Campus Resource & Services Analytics Component
+function renderResourceAnalyticsBox(title = "Campus Resource Analysis", subtitle = "Monthly live tracking for capacity, water, and electricity consumption", roleContext = "ADMIN") {
+    const totalBeds = STORE.rooms.reduce((acc, r) => acc + r.capacity, 0);
+    const occupiedBeds = STORE.rooms.reduce((acc, r) => acc + r.occupied, 0);
+    const capPct = totalBeds > 0 ? Math.round((occupiedBeds / totalBeds) * 100) : 0;
+    
+    const latest = STORE.sustainability[STORE.sustainability.length - 1] || {
+        month: "Aug 2026", electricityKwh: 17800, waterKl: 420, eChange: 22.76, wChange: 18.31, isAnomaly: true
+    };
+
+    const maxKwhBaseline = 22000;
+    const maxKlBaseline = 500;
+    const elecPct = Math.min(100, Math.round((latest.electricityKwh / maxKwhBaseline) * 100));
+    const waterPct = Math.min(100, Math.round((latest.waterKl / maxKlBaseline) * 100));
 
     return `
-        <div class="sustainability-chart-container">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); font-size: 12px;">
-                <div style="display: flex; gap: 16px; align-items: center;">
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <span style="width: 12px; height: 12px; background: #8B5A3C; border-radius: 3px; display: inline-block;"></span>
-                        <span style="font-weight: 600; color: var(--text-primary);">Electricity (kWh)</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <span style="width: 12px; height: 12px; background: #0E7490; border-radius: 3px; display: inline-block;"></span>
-                        <span style="font-weight: 600; color: var(--text-primary);">Water (kL)</span>
-                    </div>
+        <div class="resource-analytics-card">
+            <div class="resource-card-header">
+                <div>
+                    <h3 class="resource-card-title">${escapeHtml(title)}</h3>
+                    <p class="resource-card-sub">${escapeHtml(subtitle)} &bull; Billing Cycle: <b>${escapeHtml(latest.month)}</b></p>
                 </div>
-                <div style="font-size: 11px; color: var(--text-muted);">
-                    Flagged threshold: <b>&gt; 15% MoM surge</b>
-                </div>
+                ${roleContext === "ADMIN" ? `
+                    <button class="btn btn-primary btn-sm" onclick="openModal('ADD_UTILITY')">
+                        ${getIconSvg('plus', 13)} Log Meter Read
+                    </button>
+                ` : roleContext === "WARDEN" ? `
+                    <button class="btn btn-secondary btn-sm" onclick="navigateTo('SUSTAINABILITY')">
+                        ${getIconSvg('leaf', 13)} Sustainability Hub &rarr;
+                    </button>
+                ` : `
+                    <span class="badge-pill success">Wing Conservation Active</span>
+                `}
             </div>
 
-            <div class="chart-bars-wrap">
-                ${STORE.sustainability.map(item => {
-                    const ePct = Math.min(100, Math.max(16, Math.round((item.electricityKwh / maxKwh) * 100)));
-                    const wPct = Math.min(100, Math.max(16, Math.round((item.waterKl / maxKl) * 100)));
-                    return `
-                        <div class="chart-month-row">
-                            <span class="chart-month-label">${escapeHtml(item.month)}</span>
-                            <div class="bar-track" title="Electricity: ${item.electricityKwh.toLocaleString()} kWh">
-                                <div class="bar-fill electricity" style="width: ${ePct}%;">
-                                    ${item.electricityKwh.toLocaleString()} kWh
-                                </div>
-                            </div>
-                            <div class="bar-track" title="Water: ${item.waterKl.toLocaleString()} kL">
-                                <div class="bar-fill water" style="width: ${wPct}%;">
-                                    ${item.waterKl.toLocaleString()} kL
-                                </div>
-                            </div>
-                            <div>
-                                ${item.isAnomaly ? `
-                                    <span class="anomaly-tag">${getIconSvg('alertTriangle', 12)} +${item.eChange.toFixed(1)}% Jump</span>
-                                ` : `
-                                    <span class="normal-tag">${item.eChange >= 0 ? '+' : ''}${item.eChange.toFixed(1)}% MoM</span>
-                                `}
-                            </div>
+            <div class="resource-meters-grid">
+                <!-- 1. Capacity & Bed Occupancy -->
+                <div class="resource-meter-item">
+                    <div class="meter-label-row">
+                        <span class="meter-category-label">
+                            <span class="meter-icon" style="color: var(--color-success);">${getIconSvg('building', 16)}</span>
+                            Campus Bed Occupancy
+                        </span>
+                        <div class="meter-value-wrapper">
+                            <span class="meter-prominent-value">${capPct}%</span>
+                            <span class="meter-unit">capacity</span>
                         </div>
-                    `;
-                }).join('')}
+                    </div>
+                    <div class="meter-slider-track" aria-label="Campus Bed Occupancy: ${capPct}%">
+                        <div class="meter-slider-fill capacity" style="width: ${capPct}%;"></div>
+                    </div>
+                    <div class="meter-footer-row">
+                        <span class="meter-detail-text"><b>${occupiedBeds}</b> of <b>${totalBeds}</b> beds assigned</span>
+                        <span class="meter-badge positive">${totalBeds - occupiedBeds === 0 ? 'Full Occupancy' : (totalBeds - occupiedBeds) + ' beds vacant'}</span>
+                    </div>
+                </div>
+
+                <!-- 2. Water Usage Meter -->
+                <div class="resource-meter-item">
+                    <div class="meter-label-row">
+                        <span class="meter-category-label">
+                            <span class="meter-icon" style="color: var(--color-cyan);">${getIconSvg('droplet', 16)}</span>
+                            Water Consumption
+                        </span>
+                        <div class="meter-value-wrapper">
+                            <span class="meter-prominent-value">${latest.waterKl.toLocaleString()} kL</span>
+                            <span class="meter-unit">(${ (latest.waterKl * 1000).toLocaleString() } Liters)</span>
+                        </div>
+                    </div>
+                    <div class="meter-slider-track" aria-label="Water Consumption: ${latest.waterKl} kL">
+                        <div class="meter-slider-fill water" style="width: ${waterPct}%;"></div>
+                    </div>
+                    <div class="meter-footer-row">
+                        <span class="meter-detail-text">Target: &lt; 350 kL/mo</span>
+                        ${latest.wChange > 15 ? `
+                            <span class="meter-badge danger">${getIconSvg('alertTriangle', 11)} +${latest.wChange.toFixed(1)}% MoM Surge</span>
+                        ` : `
+                            <span class="meter-badge positive">${latest.wChange >= 0 ? '+' : ''}${latest.wChange.toFixed(1)}% vs prev month</span>
+                        `}
+                    </div>
+                </div>
+
+                <!-- 3. Electricity Usage Meter -->
+                <div class="resource-meter-item">
+                    <div class="meter-label-row">
+                        <span class="meter-category-label">
+                            <span class="meter-icon" style="color: var(--color-warning);">${getIconSvg('zap', 16)}</span>
+                            Electricity Usage
+                        </span>
+                        <div class="meter-value-wrapper">
+                            <span class="meter-prominent-value">${latest.electricityKwh.toLocaleString()}</span>
+                            <span class="meter-unit">kWh</span>
+                        </div>
+                    </div>
+                    <div class="meter-slider-track" aria-label="Electricity Usage: ${latest.electricityKwh} kWh">
+                        <div class="meter-slider-fill electricity" style="width: ${elecPct}%;"></div>
+                    </div>
+                    <div class="meter-footer-row">
+                        <span class="meter-detail-text">Target: &lt; 15,000 kWh/mo</span>
+                        ${latest.eChange > 15 ? `
+                            <span class="meter-badge danger">${getIconSvg('alertTriangle', 11)} +${latest.eChange.toFixed(1)}% MoM Surge</span>
+                        ` : `
+                            <span class="meter-badge positive">${latest.eChange >= 0 ? '+' : ''}${latest.eChange.toFixed(1)}% vs prev month</span>
+                        `}
+                    </div>
+                </div>
             </div>
         </div>
     `;
 }
 
+// 6.4 SUSTAINABILITY WIDGET & PANEL
+function renderSustainabilityWidget() {
+    return renderResourceAnalyticsBox("Campus Sustainability Pulse", "Zero-hardware monthly manual utility tracker", "ADMIN");
+}
+
 function renderSustainabilityPanel() {
     return `
-        <div class="card-panel">
-            <div class="card-header-row">
-                <div>
-                    <h3 class="card-title">Campus Resource Analytics</h3>
-                    <p class="card-subtitle">Manual electricity and water logging with automated MoM % variance and jump anomaly detection (&gt;15%)</p>
-                </div>
-                <button class="btn btn-primary" onclick="openModal('ADD_UTILITY')">${getIconSvg('plus', 14)} Log Month Utility Read</button>
-            </div>
-            ${renderSustainabilityWidget()}
+        <div style="margin-bottom: 24px;">
+            ${renderResourceAnalyticsBox("Campus Resource Analytics", "Manual electricity and water logging with automated MoM % variance and jump anomaly detection (>15%)", "ADMIN")}
         </div>
 
         <div class="card-panel">

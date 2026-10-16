@@ -261,12 +261,25 @@
             <!-- Botanical Watermark Motif (Subtle, Reactive in Light & Dark Mode) -->
             <div class="shell-botanical-watermark" aria-hidden="true"></div>
 
-            <!-- Persistent Sidebar -->
-            <aside class="app-sidebar">
+            <!-- Slide-out Drawer Backdrop Overlay -->
+            <div id="sidebar-backdrop" class="sidebar-backdrop" onclick="closeSidebar()" aria-hidden="true"></div>
+
+            <!-- Collapsible Slide-out Sidebar Drawer (Hidden by default on all screen sizes) -->
+            <aside class="app-sidebar" id="app-sidebar">
                 <div class="sidebar-brand">
-                    <span class="brand-tag">🌿 ECO-LIVING</span>
-                    <h2 class="brand-name">Hostel Suite</h2>
-                    <span id="sidebar-role-badge" class="brand-role">ADMINISTRATOR</span>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <span class="brand-tag">🌿 ECO-LIVING</span>
+                            <h2 class="brand-name">Hostel Suite</h2>
+                            <span id="sidebar-role-badge" class="brand-role">ADMINISTRATOR</span>
+                        </div>
+                        <button class="sidebar-close-btn" onclick="closeSidebar()" aria-label="Close navigation sidebar" title="Close Menu">
+                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
                 <nav id="sidebar-nav" class="sidebar-nav">
@@ -283,13 +296,22 @@
                 </div>
             </aside>
 
-            <!-- Main Shell Canvas -->
-            <div class="app-main-canvas">
+            <!-- Main Shell Canvas (Expands to 100% when sidebar is closed) -->
+            <div class="app-main-canvas" id="app-main-canvas">
                 <!-- Persistent Header -->
                 <header class="app-header">
                     <div class="header-left">
-                        <h2 id="header-page-title" class="page-title">Executive Dashboard</h2>
-                        <span id="header-page-sub" class="page-sub">Campus hostel operations, metrics overview, and today's priority actions</span>
+                        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="Toggle navigation menu" title="Toggle Navigation Menu">
+                            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="3" y1="12" x2="21" y2="12"></line>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <line x1="3" y1="18" x2="21" y2="18"></line>
+                            </svg>
+                        </button>
+                        <div class="header-title-col">
+                            <h2 id="header-page-title" class="page-title">Executive Dashboard</h2>
+                            <span id="header-page-sub" class="page-sub">Campus hostel operations, metrics overview, and today's priority actions</span>
+                        </div>
                     </div>
 
                     <div class="header-right">
