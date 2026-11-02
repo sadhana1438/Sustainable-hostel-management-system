@@ -377,10 +377,13 @@ public class DatabaseManager {
     // ==========================================
     public User authenticate(String username, String password, User.Role expectedRole) {
         if (username == null || password == null) return null;
-        String sql = "SELECT * FROM users WHERE LOWER(username) = ? AND password = ?";
+        String sql = "SELECT * FROM users WHERE (LOWER(username) = ? OR LOWER(email) = ? OR LOWER(student_id) = ?) AND password = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, username.trim().toLowerCase());
-            ps.setString(2, password);
+            String trimmed = username.trim().toLowerCase();
+            ps.setString(1, trimmed);
+            ps.setString(2, trimmed);
+            ps.setString(3, trimmed);
+            ps.setString(4, password);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     User.Role role = User.Role.valueOf(rs.getString("role"));

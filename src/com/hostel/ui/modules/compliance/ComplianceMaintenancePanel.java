@@ -104,11 +104,11 @@ public class ComplianceMaintenancePanel extends JPanel {
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
         btnPanel.setOpaque(false);
 
-        CustomButton addCompBtn = new CustomButton("+ File Maintenance Ticket", CustomButton.Variant.PRIMARY);
-        addCompBtn.addActionListener(e -> openFileComplaintDialog());
-        btnPanel.add(addCompBtn);
-
-        if (!isStudent) {
+        if (isStudent) {
+            CustomButton addCompBtn = new CustomButton("+ File Maintenance Ticket", CustomButton.Variant.PRIMARY);
+            addCompBtn.addActionListener(e -> openFileComplaintDialog());
+            btnPanel.add(addCompBtn);
+        } else {
             CustomButton addDisciplineBtn = new CustomButton("⚖ Record Violation", CustomButton.Variant.SECONDARY);
             addDisciplineBtn.addActionListener(e -> openAddComplianceDialog());
             btnPanel.add(addDisciplineBtn);

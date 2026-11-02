@@ -168,7 +168,7 @@ public class MainAppShell extends JPanel {
                 sub = "Resident database, academic details, room mapping, and enrollment profiles";
                 break;
             case "ROOMS":
-                title = "Room Allocation & Wing Management";
+                title = "Bed Allocation & Wing Management";
                 sub = "Real-time room occupancy, block allocations, vacant beds and transfer requests";
                 break;
             case "FEES":

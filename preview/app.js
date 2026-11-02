@@ -18,7 +18,7 @@ const DEFAULT_STUDENTS = [
 
 function loadStoredUsers() {
     try {
-        const stored = localStorage.getItem("hostel_users");
+        const stored = localStorage.getItem("hostel_users_v4");
         if (stored) {
             const parsed = JSON.parse(stored);
             if (Array.isArray(parsed) && parsed.length > 0) return parsed;
@@ -31,7 +31,7 @@ function loadStoredUsers() {
 
 function saveUsersToStorage() {
     try {
-        localStorage.setItem("hostel_users", JSON.stringify(STORE.users));
+        localStorage.setItem("hostel_users_v4", JSON.stringify(STORE.users));
     } catch (e) {
         console.warn("Could not save users to localStorage", e);
     }
@@ -42,7 +42,7 @@ function loadStoredStudents() {
         const stored = localStorage.getItem("hostel_students_v3");
         if (stored) {
             const parsed = JSON.parse(stored);
-            if (Array.isArray(parsed) && parsed.length === 1) return parsed;
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
         }
     } catch (e) {
         console.warn("Could not load students from localStorage", e);
@@ -58,18 +58,125 @@ function saveStudentsToStorage() {
     }
 }
 
+const DEFAULT_FEES = [
+    { id: "FEE-01", studentId: "STU-1001", studentName: "Aarav Sharma", roomNo: "A-101", amount: 45000, paid: 25000, due: 20000, status: "PARTIAL", term: "Fall 2026", dueDate: "2026-08-30" }
+];
+
+function loadStoredFees() {
+    try {
+        const stored = localStorage.getItem("hostel_fees_v3");
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+    } catch (e) {}
+    return [...DEFAULT_FEES];
+}
+
+function saveFeesToStorage() {
+    try {
+        localStorage.setItem("hostel_fees_v3", JSON.stringify(STORE.fees));
+    } catch (e) {}
+}
+
+const DEFAULT_EVENTS = [
+    {
+        id: "EVT-2024-001",
+        title: "Annual Campus Eco-Living & Solar Seminar",
+        venue: "Hostel Seminar Hall (Block A)",
+        organizer: "Hostel Green Committee",
+        date: "2026-09-25",
+        timeSlot: "04:00 PM - 06:30 PM",
+        status: "CONFIRMED",
+        allocatedBy: "Dr. Sarah Jenkins",
+        attendees: 50
+    }
+];
+
+function loadStoredEvents() {
+    try {
+        const stored = localStorage.getItem("hostel_events_v3");
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+    } catch (e) {}
+    return [...DEFAULT_EVENTS];
+}
+
+function saveEventsToStorage() {
+    try {
+        localStorage.setItem("hostel_events_v3", JSON.stringify(STORE.events));
+    } catch (e) {}
+}
+
+const DEFAULT_MESS_FEEDBACKS = [
+    {
+        id: "MFB-001",
+        studentName: "Aarav Sharma",
+        roomNo: "A-101",
+        meal: "Lunch",
+        rating: 5,
+        category: "Taste & Food Quality",
+        comment: "The paneer butter masala and dal tadka were fresh and well-prepared.",
+        date: "2026-09-06"
+    }
+];
+
+function loadStoredMessFeedbacks() {
+    try {
+        const stored = localStorage.getItem("hostel_mess_feedbacks_v3");
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+    } catch (e) {}
+    return [...DEFAULT_MESS_FEEDBACKS];
+}
+
+function saveMessFeedbacksToStorage() {
+    try {
+        localStorage.setItem("hostel_mess_feedbacks_v3", JSON.stringify(STORE.messFeedbacks));
+    } catch (e) {}
+}
+
+const DEFAULT_MESS_MENU = {
+    todayDate: "Monday, Sep 7",
+    breakfast: "Idli Sambar, Chutney, Fresh Fruits & Masala Chai / Coffee",
+    lunch: "Paneer Butter Masala, Dal Tadka, Jeera Rice, Phulka, Curd & Salad",
+    snacks: "Vegetable Samosa with Mint Dip & Hot Tea",
+    dinner: "Methi Roti, Aloo Gobi, Yellow Dal, Steamed Rice, Gulab Jamun"
+};
+
+function loadStoredMessMenu() {
+    try {
+        const stored = localStorage.getItem("hostel_mess_menu_v3");
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            if (parsed && typeof parsed === "object") return parsed;
+        }
+    } catch (e) {}
+    return { ...DEFAULT_MESS_MENU };
+}
+
+function saveMessMenuToStorage() {
+    try {
+        localStorage.setItem("hostel_mess_menu_v3", JSON.stringify(STORE.messMenu));
+    } catch (e) {}
+}
+
 const STORE = {
     currentUser: null,
     users: loadStoredUsers(),
     students: loadStoredStudents(),
 
     rooms: [
-        { id: "RM-101", roomNo: "A-101", block: "A-Block", floor: 1, capacity: 2, occupied: 2, type: "DOUBLE_AC", status: "OCCUPIED" }
+        { id: "RM-101", roomNo: "A-101", block: "A-Block", floor: 1, capacity: 2, occupied: 1, type: "DOUBLE_AC", status: "PARTIALLY_OCCUPIED" }
     ],
 
-    fees: [
-        { id: "FEE-01", studentId: "STU-1001", studentName: "Aarav Sharma", roomNo: "A-101", amount: 45000, paid: 25000, due: 20000, status: "PARTIAL", term: "Fall 2026", dueDate: "2026-08-30" }
-    ],
+    events: loadStoredEvents(),
+
+    fees: loadStoredFees(),
 
     visitors: [
         { id: "VIS-01", name: "Rajesh Sharma", relation: "Father", studentName: "Aarav Sharma", contact: "+91 98220 11223", checkIn: "2026-09-07 10:15", checkOut: null, status: "INSIDE", passNo: "VP-901" }
@@ -95,13 +202,9 @@ const STORE = {
         { id: "NOT-01", title: "Green Hostel Energy Conservation Drive", category: "SUSTAINABILITY", priority: "HIGH", date: "2026-09-05", content: "All residents are requested to turn off AC and lights when leaving rooms. Solar backup test scheduled this Saturday.", author: "Warden Office" }
     ],
 
-    messMenu: {
-        todayDate: "Monday, Sep 7",
-        breakfast: "Idli Sambar, Chutney, Fresh Fruits & Masala Chai / Coffee",
-        lunch: "Paneer Butter Masala, Dal Tadka, Jeera Rice, Phulka, Curd & Salad",
-        snacks: "Vegetable Samosa with Mint Dip & Hot Tea",
-        dinner: "Methi Roti, Aloo Gobi, Yellow Dal, Steamed Rice, Gulab Jamun"
-    },
+    messMenu: loadStoredMessMenu(),
+
+    messFeedbacks: loadStoredMessFeedbacks(),
 
     notifications: [
         { id: "NT-01", title: "Electricity Surge Warning", desc: "Aug 2026 energy consumption jumped by +22.8% MoM. Anomaly threshold (>15%) triggered.", time: "10 mins ago", read: false, type: "DANGER" }
@@ -193,7 +296,15 @@ const ENUM_LABEL_MAP = {
     MEDIUM: "Medium Priority",
     LOW: "Low Priority",
     GENERAL: "General",
-    DISCIPLINE: "Discipline"
+    DISCIPLINE: "Discipline",
+
+    // Events & Allocations
+    CONFIRMED: "Confirmed",
+    CANCELLED: "Cancelled",
+    EVENT_ALLOCATED: "Event Space Allocated",
+    ROOM_ALLOCATED: "Bed Allocated",
+    ROOM_TRANSFERRED: "Bed Transferred",
+    FEEDBACK_SUBMITTED: "Mess Feedback Submitted"
 };
 
 function formatEnumLabel(val) {
@@ -245,7 +356,8 @@ const SVG_ICONS = {
     plus: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`,
     droplet: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>`,
     zap: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
-    menu: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`
+    menu: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`,
+    calendar: `<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>`
 };
 
 function getIconSvg(name, size = 16) {
@@ -260,7 +372,8 @@ const NAV_CONFIG = {
     ADMIN: [
         { id: "ADMIN_DASHBOARD", label: "Executive Dashboard", icon: "dashboard", sub: "Campus hostel operations & metrics overview" },
         { id: "STUDENT_MGMT", label: "Student Directory", icon: "users", sub: "Manage registered student profiles and status" },
-        { id: "ROOM_ALLOCATION", label: "Room Allocation", icon: "building", sub: "Monitor capacity, assign beds and room transfers" },
+        { id: "ROOM_ALLOCATION", label: "Bed Allocation", icon: "bed", sub: "Assign student beds, track room capacity and transfers" },
+        { id: "EVENT_ALLOCATION", label: "Event Space Allocation", icon: "calendar", sub: "Allocate common halls, seminar rooms & campus event spaces" },
         { id: "HOSTEL_FEES", label: "Hostel Fee Management", icon: "creditCard", sub: "Track dues, record payments & issue receipts" },
         { id: "VISITOR_MGMT", label: "Visitor Management", icon: "shield", sub: "Security gate logs, active visitors & passes" },
         { id: "LEAVE_MGMT", label: "Leave Requests", icon: "fileText", sub: "Review and approve student out-station leaves" },
@@ -276,7 +389,9 @@ const NAV_CONFIG = {
 
     WARDEN: [
         { id: "WARDEN_DASHBOARD", label: "Warden Operations Desk", icon: "shield", sub: "Daily actions, triage approvals & hostel safety" },
-        { id: "ROOM_ALLOCATION", label: "Room & Occupancy", icon: "building", sub: "Monitor capacity and student bed occupancy" },
+        { id: "ROOM_ALLOCATION", label: "Bed Allocation", icon: "bed", sub: "Assign student beds, track room capacity and transfers" },
+        { id: "EVENT_ALLOCATION", label: "Event Space Allocation", icon: "calendar", sub: "Allocate common halls, seminar rooms & campus event spaces" },
+        { id: "HOSTEL_FEES", label: "Hostel Fee Management", icon: "creditCard", sub: "Track dues, record payments & issue receipts" },
         { id: "VISITOR_MGMT", label: "Visitor Security Gate", icon: "fileText", sub: "Check in guests, issue passes and check-outs" },
         { id: "LEAVE_MGMT", label: "Leave Approvals", icon: "fileText", sub: "Triage pending student leave applications" },
         { id: "MAINTENANCE", label: "Maintenance & Triage", icon: "wrench", sub: "Resolve student complaints and assign technicians" },
@@ -310,90 +425,113 @@ let activeStudentQuery = "";
 // 3. AUTH & SESSION CONTROLLER
 // ==========================================
 function handleLogin(e) {
-    e.preventDefault();
-    const role = document.getElementById("login-role").value;
-    const user = (document.getElementById("login-username").value || "").trim();
+    if (e && e.preventDefault) e.preventDefault();
+    const role = (document.getElementById("login-role") && document.getElementById("login-role").value) || "STUDENT";
+    const user = (document.getElementById("login-username").value || "").trim().toLowerCase();
     const pass = (document.getElementById("login-password").value || "").trim();
 
-    const matched = STORE.users.find(u => u.username.toLowerCase() === user.toLowerCase() && u.pass === pass && u.role === role);
+    const matched = STORE.users.find(u => {
+        const userMatch = (u.username.toLowerCase() === user || (u.email && u.email.toLowerCase() === user));
+        let rollMatch = false;
+        if (role === "STUDENT" && u.studentId) {
+            const stu = STORE.students.find(s => s.id === u.studentId);
+            if (stu && stu.roll && stu.roll.toLowerCase() === user) {
+                rollMatch = true;
+            }
+        }
+        return (userMatch || rollMatch) && u.pass === pass && u.role === role;
+    });
 
     if (matched) {
-        document.getElementById("login-error-banner").style.display = "none";
+        const errorBanner = document.getElementById("login-error-banner");
+        if (errorBanner) errorBanner.style.display = "none";
         loginUser(matched);
     } else {
         const errorBanner = document.getElementById("login-error-banner");
         const errorText = document.getElementById("login-error-text");
-        errorText.innerText = "Invalid credentials. Please verify your role, username, and password.";
-        errorBanner.style.display = "flex";
+        if (errorText) errorText.innerText = "Invalid credentials. Please verify your role, email/username, and password.";
+        if (errorBanner) errorBanner.style.display = "flex";
     }
 }
 
-function switchAuthMode(mode) {
-    const signInForm = document.getElementById("auth-signin-form");
-    const signUpForm = document.getElementById("auth-signup-form");
-    const signInTab = document.getElementById("auth-tab-signin");
-    const signUpTab = document.getElementById("auth-tab-signup");
+function switchAuthMode(mode, keepSuccessBanner = false) {
+    const isSignUp = (String(mode).toUpperCase() === "SIGN_UP");
+    const signInForm = document.getElementById("login-form");
+    const signUpForm = document.getElementById("signup-form");
+    const btnSignIn = document.getElementById("btn-mode-signin");
+    const btnSignUp = document.getElementById("btn-mode-signup");
     const errorBanner = document.getElementById("login-error-banner");
+    const successBanner = document.getElementById("login-success-banner");
     const role = (document.getElementById("login-role") && document.getElementById("login-role").value) || "STUDENT";
-    const studentFields = document.getElementById("signup-extra-fields");
+    const studentExtra = document.getElementById("signup-student-extra");
+    const authHeading = document.getElementById("auth-heading");
+    const signupRole = document.getElementById("signup-role");
 
     if (errorBanner) errorBanner.style.display = "none";
+    if (!keepSuccessBanner && successBanner) successBanner.style.display = "none";
+    if (signupRole) signupRole.value = role;
 
-    if (mode === "signup") {
+    if (isSignUp) {
         if (signInForm) signInForm.style.display = "none";
         if (signUpForm) signUpForm.style.display = "block";
-        if (signInTab) signInTab.classList.remove("active");
-        if (signUpTab) signUpTab.classList.add("active");
-        if (studentFields) {
-            studentFields.style.display = role === "STUDENT" ? "block" : "none";
-        }
+        if (btnSignIn) btnSignIn.classList.remove("active");
+        if (btnSignUp) btnSignUp.classList.add("active");
+        if (studentExtra) studentExtra.style.display = (role === "STUDENT") ? "block" : "none";
+        if (authHeading) authHeading.innerText = `Create ${formatEnumLabel(role)} Account`;
     } else {
         if (signInForm) signInForm.style.display = "block";
         if (signUpForm) signUpForm.style.display = "none";
-        if (signInTab) signInTab.classList.add("active");
-        if (signUpTab) signUpTab.classList.remove("active");
+        if (btnSignIn) btnSignIn.classList.add("active");
+        if (btnSignUp) btnSignUp.classList.remove("active");
+        if (authHeading) authHeading.innerText = "Sign In";
     }
 }
 
 function handleSignUp(e) {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     const role = (document.getElementById("login-role") && document.getElementById("login-role").value) || "STUDENT";
     const fullName = (document.getElementById("signup-fullname").value || "").trim();
     const email = (document.getElementById("signup-email").value || "").trim().toLowerCase();
-    const username = (document.getElementById("signup-username").value || "").trim().toLowerCase();
     const pass = (document.getElementById("signup-password").value || "").trim();
-    const confirmPass = (document.getElementById("signup-confirm-password").value || "").trim();
     const errorBanner = document.getElementById("login-error-banner");
     const errorText = document.getElementById("login-error-text");
+    const successBanner = document.getElementById("login-success-banner");
+    const successText = document.getElementById("login-success-text");
 
-    if (!fullName || !email || !username || !pass) {
-        errorText.innerText = "Please fill in all required fields.";
-        errorBanner.style.display = "flex";
-        return;
-    }
-
-    if (pass !== confirmPass) {
-        errorText.innerText = "Passwords do not match. Please verify and re-enter.";
-        errorBanner.style.display = "flex";
+    if (!fullName || !email || !pass) {
+        if (errorText) errorText.innerText = "Please fill in all required fields.";
+        if (errorBanner) errorBanner.style.display = "flex";
+        if (successBanner) successBanner.style.display = "none";
         return;
     }
 
     if (pass.length < 4) {
-        errorText.innerText = "Password must be at least 4 characters long.";
-        errorBanner.style.display = "flex";
+        if (errorText) errorText.innerText = "Password must be at least 4 characters long.";
+        if (errorBanner) errorBanner.style.display = "flex";
+        if (successBanner) successBanner.style.display = "none";
         return;
     }
 
-    if (STORE.users.some(u => u.username.toLowerCase() === username)) {
-        errorText.innerText = "This username is already taken. Please choose another.";
-        errorBanner.style.display = "flex";
+    if (STORE.users.some(u => u.email && u.email.toLowerCase() === email && u.role === role)) {
+        if (errorText) errorText.innerText = `An account with ${email} already exists for ${formatEnumLabel(role)}. Please sign in.`;
+        if (errorBanner) errorBanner.style.display = "flex";
+        if (successBanner) successBanner.style.display = "none";
         return;
+    }
+
+    // Derive a unique username
+    let baseUser = email.split("@")[0].replace(/[^a-z0-9]/gi, "").toLowerCase() || "user";
+    let username = baseUser;
+    let counter = 1;
+    while (STORE.users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+        username = `${baseUser}${counter++}`;
     }
 
     let studentId = null;
+    let roomNo = "A-101";
     if (role === "STUDENT") {
-        const roll = (document.getElementById("signup-roll").value || "").trim() || `2024CS${100 + STORE.students.length + 1}`;
-        const roomNo = (document.getElementById("signup-room").value || "").trim() || "B-202";
+        const rollInput = document.getElementById("signup-roll");
+        const roll = (rollInput && rollInput.value ? rollInput.value.trim() : "") || `2024CS${100 + STORE.students.length + 1}`;
         studentId = `STU-${1000 + STORE.students.length + 1}`;
 
         const newStudent = {
@@ -423,6 +561,7 @@ function handleSignUp(e) {
             term: "Fall 2026",
             dueDate: "2026-09-30"
         });
+        saveFeesToStorage();
     }
 
     const newUser = {
@@ -439,8 +578,21 @@ function handleSignUp(e) {
     saveUsersToStorage();
 
     if (errorBanner) errorBanner.style.display = "none";
-    showToast(`Account created successfully for ${fullName}!`, "success");
-    loginUser(newUser);
+    if (successBanner && successText) {
+        successText.innerText = `Account created for ${fullName}! Use ${email} to sign in.`;
+        successBanner.style.display = "flex";
+    }
+
+    // Pre-fill login credentials for seamless sign in
+    const loginUser = document.getElementById("login-username");
+    const loginPass = document.getElementById("login-password");
+    if (loginUser) loginUser.value = email;
+    if (loginPass) loginPass.value = pass;
+
+    showToast(`Account created for ${fullName} (${formatEnumLabel(role)})!`, "success");
+
+    // Switch to sign-in view
+    switchAuthMode("SIGN_IN", true);
 }
 
 function togglePasswordVisibility(inputId, btn) {
@@ -497,26 +649,28 @@ function selectLoginRole(role) {
     const userLabel = document.getElementById("login-username-label");
     const userInput = document.getElementById("login-username");
     const passInput = document.getElementById("login-password");
-    const studentFields = document.getElementById("signup-extra-fields");
+    const signupRole = document.getElementById("signup-role");
+    if (signupRole) signupRole.value = role;
+    const studentFields = document.getElementById("signup-student-extra");
 
     document.getElementById("login-error-banner").style.display = "none";
 
     if (role === "ADMIN") {
         badge.innerText = "ADMINISTRATOR";
         sub.innerText = "Access full system governance, analytics and settings";
-        userLabel.innerText = "Username";
+        userLabel.innerText = "Username or Email";
         userInput.value = "admin";
         passInput.value = "admin123";
     } else if (role === "WARDEN") {
         badge.innerText = "HOSTEL WARDEN";
         sub.innerText = "Operations desk, visitor log and leave approvals";
-        userLabel.innerText = "Username";
+        userLabel.innerText = "Username or Email";
         userInput.value = "warden";
         passInput.value = "warden123";
     } else {
         badge.innerText = "HOSTEL RESIDENT";
         sub.innerText = "Student portal, room allocation, leaves and digital fees";
-        userLabel.innerText = "Roll No / Username";
+        userLabel.innerText = "Roll No, Username or Email";
         userInput.value = "student";
         passInput.value = "student123";
     }
@@ -525,7 +679,7 @@ function selectLoginRole(role) {
         studentFields.style.display = role === "STUDENT" ? "block" : "none";
     }
 
-    switchAuthMode("signin");
+    switchAuthMode("SIGN_IN");
 
     document.getElementById("login-role-selection").style.display = "none";
     document.getElementById("login-credentials-step").style.display = "block";
@@ -718,6 +872,66 @@ function dispatchAppEvent(eventType, payload) {
             read: false,
             type: "INFO"
         });
+    } else if (eventType === "EVENT_ALLOCATED") {
+        STORE.notifications.unshift({
+            id: `NT-${Date.now()}`,
+            title: "Event Space Allocated",
+            desc: `"${payload.title}" confirmed for ${payload.venue} on ${payload.date} (${payload.timeSlot}).`,
+            time: "Just now",
+            read: false,
+            type: "SUCCESS"
+        });
+        STORE.activityLogs.unshift({
+            action: "EVENT_ALLOCATED",
+            details: `Allocated "${payload.venue}" for ${payload.title} (${payload.attendees} attendees)`,
+            user: (STORE.currentUser && STORE.currentUser.username) || "admin",
+            time: "Just now"
+        });
+    } else if (eventType === "ROOM_ALLOCATED") {
+        STORE.notifications.unshift({
+            id: `NT-${Date.now()}`,
+            title: "Bed Allocation Confirmed",
+            desc: `${payload.bed} in Room ${payload.roomNo} allocated to ${payload.studentName}.`,
+            time: "Just now",
+            read: false,
+            type: "SUCCESS"
+        });
+        STORE.activityLogs.unshift({
+            action: "ROOM_ALLOCATED",
+            details: `Allocated ${payload.bed} in Room ${payload.roomNo} to ${payload.studentName}`,
+            user: (STORE.currentUser && STORE.currentUser.username) || "admin",
+            time: "Just now"
+        });
+    } else if (eventType === "ROOM_TRANSFERRED") {
+        STORE.notifications.unshift({
+            id: `NT-${Date.now()}`,
+            title: "Bed Transfer Updated",
+            desc: `${payload.studentName} transferred to Room ${payload.newRoom} (${payload.newBed}).`,
+            time: "Just now",
+            read: false,
+            type: "INFO"
+        });
+        STORE.activityLogs.unshift({
+            action: "ROOM_TRANSFERRED",
+            details: `Transferred ${payload.studentName} to Room ${payload.newRoom} (${payload.newBed})`,
+            user: (STORE.currentUser && STORE.currentUser.username) || "admin",
+            time: "Just now"
+        });
+    } else if (eventType === "MESS_FEEDBACK_SUBMITTED") {
+        STORE.notifications.unshift({
+            id: `NT-${Date.now()}`,
+            title: "New Mess Review Received",
+            desc: `${payload.studentName} rated ${payload.meal} (${payload.rating}/5 stars).`,
+            time: "Just now",
+            read: false,
+            type: "INFO"
+        });
+        STORE.activityLogs.unshift({
+            action: "FEEDBACK_SUBMITTED",
+            details: `Resident ${payload.studentName} reviewed ${payload.meal} (${payload.category})`,
+            user: (STORE.currentUser && STORE.currentUser.username) || "student",
+            time: "Just now"
+        });
     }
 
     updateNotificationBadge();
@@ -737,6 +951,7 @@ function getModuleHtml(moduleId) {
         case "STUDENT_DASHBOARD": return renderStudentDashboard();
         case "STUDENT_MGMT": return renderStudentManagement();
         case "ROOM_ALLOCATION": return renderRoomAllocation();
+        case "EVENT_ALLOCATION": return renderEventAllocation();
         case "HOSTEL_FEES": return renderHostelFees();
         case "VISITOR_MGMT": return renderVisitorManagement();
         case "LEAVE_MGMT": return renderLeaveManagement();
@@ -842,7 +1057,8 @@ function renderAdminDashboard() {
             </div>
             <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                 <button class="btn btn-primary" onclick="openModal('ADD_STUDENT')">${getIconSvg('users', 14)} Register Student</button>
-                <button class="btn btn-secondary" onclick="openModal('ALLOCATE_ROOM')">${getIconSvg('building', 14)} Allocate Bed</button>
+                <button class="btn btn-secondary" onclick="openModal('ALLOCATE_ROOM')">${getIconSvg('bed', 14)} Allocate Bed</button>
+                <button class="btn btn-secondary" onclick="openModal('ALLOCATE_EVENT')">${getIconSvg('calendar', 14)} Allocate Event Space</button>
                 <button class="btn btn-secondary" onclick="openModal('RECORD_FEE')">${getIconSvg('creditCard', 14)} Record Fee Payment</button>
                 <button class="btn btn-secondary" onclick="openModal('ADD_NOTICE')">${getIconSvg('megaphone', 14)} Post Circular</button>
                 <button class="btn btn-secondary" onclick="openModal('ADD_UTILITY')">${getIconSvg('leaf', 14)} Log Utility Read</button>
@@ -939,6 +1155,21 @@ function renderWardenDashboard() {
 
         <!-- Warden Campus Resource Analysis Widget -->
         ${renderResourceAnalyticsBox("Campus Resource Analysis", "Monthly hostel capacity, water consumption, and electricity tracking", "WARDEN")}
+
+        <!-- Warden Quick Action Shortcuts -->
+        <div class="card-panel" style="margin-top: 20px;">
+            <div class="card-header-row">
+                <h3 class="card-title">Warden Quick Actions</h3>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="openModal('ALLOCATE_ROOM')">${getIconSvg('bed', 14)} Allocate Bed</button>
+                <button class="btn btn-secondary" onclick="openModal('ALLOCATE_EVENT')">${getIconSvg('calendar', 14)} Allocate Event Space</button>
+                <button class="btn btn-secondary" onclick="openModal('RECORD_FEE')">${getIconSvg('creditCard', 14)} Record Fee Payment</button>
+                <button class="btn btn-secondary" onclick="openModal('VISITOR_CHECKIN')">${getIconSvg('shield', 14)} Check-In Visitor</button>
+                <button class="btn btn-secondary" onclick="openModal('ADD_NOTICE')">${getIconSvg('megaphone', 14)} Post Circular</button>
+                <button class="btn btn-secondary" onclick="openModal('ADD_UTILITY')">${getIconSvg('leaf', 14)} Log Utility Read</button>
+            </div>
+        </div>
     `;
 }
 
@@ -996,7 +1227,10 @@ function renderStudentDashboard() {
             <div class="card-panel">
                 <div class="card-header-row">
                     <h3 class="card-title">Today's Hostel Mess Menu</h3>
-                    <button class="btn btn-ghost btn-sm" onclick="navigateTo('MESS')">Full Menu &rarr;</button>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-primary btn-sm" onclick="openModal('FEEDBACK_MESS')">⭐ Rate Food</button>
+                        <button class="btn btn-ghost btn-sm" onclick="navigateTo('MESS')">Full Menu &rarr;</button>
+                    </div>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
                     <div style="background: var(--bg-primary); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);"><b>Breakfast (7:30 AM - 9:30 AM):</b> ${escapeHtml(STORE.messMenu.breakfast)}</div>
@@ -1278,7 +1512,7 @@ function renderRoomAllocation() {
         <div class="card-panel">
             <div class="card-header-row">
                 <div>
-                    <h3 class="card-title">Hostel Wings & Bed Matrix</h3>
+                    <h3 class="card-title">Bed Allocation &amp; Room Matrix</h3>
                     <p class="card-subtitle">Real-time room occupancy and allocation management</p>
                 </div>
                 <button class="btn btn-primary" onclick="openModal('ALLOCATE_ROOM')">${getIconSvg('plus', 14)} Allocate Bed</button>
@@ -1321,6 +1555,113 @@ function renderRoomAllocation() {
             </div>
         </div>
     `;
+}
+
+// 6.6B EVENT ALLOCATION
+function renderEventAllocation() {
+    const totalEvents = STORE.events.length;
+    const confirmedEvents = STORE.events.filter(e => e.status === "CONFIRMED").length;
+
+    return `
+        <div class="kpi-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Total Event Allocations</span>
+                    <span class="stat-icon primary">${getIconSvg('calendar', 16)}</span>
+                </div>
+                <div class="stat-value">${totalEvents}</div>
+                <span class="stat-sub positive">Common halls &amp; seminar rooms</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Confirmed Bookings</span>
+                    <span class="stat-icon success">${getIconSvg('check', 16)}</span>
+                </div>
+                <div class="stat-value">${confirmedEvents}</div>
+                <span class="stat-sub">Active campus reservations</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Available Common Spaces</span>
+                    <span class="stat-icon info">${getIconSvg('building', 16)}</span>
+                </div>
+                <div class="stat-value">3 Spaces</div>
+                <span class="stat-sub">Seminar Hall, Amphitheatre, Lawn</span>
+            </div>
+        </div>
+
+        <div class="card-panel">
+            <div class="card-header-row">
+                <div>
+                    <h3 class="card-title">Hostel Common Hall &amp; Event Space Allocations</h3>
+                    <p class="card-subtitle">Manage campus venue reservations, committee schedules, and seminar spaces</p>
+                </div>
+                ${(STORE.currentUser.role === 'ADMIN' || STORE.currentUser.role === 'WARDEN') ? `
+                    <button class="btn btn-primary" onclick="openModal('ALLOCATE_EVENT')">
+                        ${getIconSvg('plus', 14)} Allocate Event Space
+                    </button>
+                ` : ''}
+            </div>
+
+            <div class="table-responsive">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Event Title</th>
+                            <th>Venue / Space</th>
+                            <th>Organizer</th>
+                            <th>Date</th>
+                            <th>Time Slot</th>
+                            <th>Attendees</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${STORE.events.map(ev => {
+                            const isConfirmed = ev.status === "CONFIRMED";
+                            return `
+                                <tr>
+                                    <td><b>${escapeHtml(ev.id)}</b></td>
+                                    <td><b>${escapeHtml(ev.title)}</b></td>
+                                    <td>${escapeHtml(ev.venue)}</td>
+                                    <td>${escapeHtml(ev.organizer)}</td>
+                                    <td>${escapeHtml(ev.date)}</td>
+                                    <td>${escapeHtml(ev.timeSlot)}</td>
+                                    <td>${ev.attendees}</td>
+                                    <td>
+                                        <span class="badge-pill ${isConfirmed ? 'success' : 'danger'}">
+                                            ${formatEnumLabel(ev.status)}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        ${isConfirmed && (STORE.currentUser.role === 'ADMIN' || STORE.currentUser.role === 'WARDEN') ? `
+                                            <button class="btn btn-danger btn-sm" onclick="cancelEvent('${ev.id}')">
+                                                ${getIconSvg('x', 13)} Cancel
+                                            </button>
+                                        ` : `<span style="color: var(--text-muted); font-size: 11px;">Completed</span>`}
+                                    </td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+}
+
+function cancelEvent(eventId) {
+    const ev = STORE.events.find(e => e.id === eventId);
+    if (ev) {
+        ev.status = "CANCELLED";
+        saveEventsToStorage();
+        if (document.getElementById("content-area")) {
+            document.getElementById("content-area").innerHTML = getModuleHtml(currentModuleId);
+        }
+        showToast(`Event allocation #${eventId} cancelled.`, "warning");
+    }
 }
 
 // 6.7 HOSTEL FEES
@@ -1380,7 +1721,12 @@ function renderHostelFees() {
                                     <td>₹${f.due.toLocaleString()}</td>
                                     <td><span class="badge-pill ${badge}">${formatEnumLabel(f.status)}</span></td>
                                     <td>
-                                        <button class="btn btn-secondary btn-sm" onclick="printReceipt('${f.id}')">${getIconSvg('printer', 13)} Receipt</button>
+                                        <div style="display: flex; gap: 6px;">
+                                            <button class="btn btn-secondary btn-sm" onclick="printReceipt('${f.id}')">${getIconSvg('printer', 13)} Receipt</button>
+                                            ${(STORE.currentUser.role === 'ADMIN' || STORE.currentUser.role === 'WARDEN') && f.due > 0 ? `
+                                                <button class="btn btn-primary btn-sm" onclick="openModal('RECORD_FEE', '${f.studentId}')">${getIconSvg('creditCard', 13)} Record Pay</button>
+                                            ` : ''}
+                                        </div>
                                     </td>
                                 </tr>
                             `;
@@ -1451,9 +1797,11 @@ function renderLeaveManagement() {
             <div class="action-toolbar">
                 <div>
                     <h3 class="card-title">Outstation Leave Applications</h3>
-                    <p class="card-subtitle">Student out-pass requests, warden review & parent notification</p>
+                    <p class="card-subtitle">Student out-pass requests, warden review &amp; parent notification</p>
                 </div>
-                <button class="btn btn-primary" onclick="openModal('APPLY_LEAVE')">${getIconSvg('plus', 14)} Apply For Leave</button>
+                ${STORE.currentUser.role === 'STUDENT' ? `
+                    <button class="btn btn-primary" onclick="openModal('APPLY_LEAVE')">${getIconSvg('plus', 14)} Apply For Leave</button>
+                ` : ''}
             </div>
 
             <div class="table-responsive">
@@ -1508,9 +1856,11 @@ function renderMaintenanceCompliance() {
             <div class="action-toolbar">
                 <div>
                     <h3 class="card-title">Hostel Maintenance Tickets</h3>
-                    <p class="card-subtitle">Plumbing, electrical, appliance repairs & technician dispatch</p>
+                    <p class="card-subtitle">Plumbing, electrical, appliance repairs &amp; technician dispatch</p>
                 </div>
-                <button class="btn btn-primary" onclick="openModal('LOG_COMPLAINT')">${getIconSvg('plus', 14)} Report Issue</button>
+                ${STORE.currentUser.role === 'STUDENT' ? `
+                    <button class="btn btn-primary" onclick="openModal('LOG_COMPLAINT')">${getIconSvg('plus', 14)} Report Issue</button>
+                ` : ''}
             </div>
 
             <div class="table-responsive">
@@ -1538,9 +1888,9 @@ function renderMaintenanceCompliance() {
                                 <td>${escapeHtml(c.assignedTo)}</td>
                                 <td><span class="badge-pill ${c.status === 'RESOLVED' ? 'success' : (c.status === 'IN_PROGRESS' ? 'primary' : 'warning')}">${formatEnumLabel(c.status)}</span></td>
                                 <td>
-                                    ${c.status !== 'RESOLVED' 
+                                    ${c.status !== 'RESOLVED' && (STORE.currentUser.role === 'ADMIN' || STORE.currentUser.role === 'WARDEN') 
                                         ? `<button class="btn btn-success btn-sm" onclick="resolveComplaint('${c.id}')">${getIconSvg('check', 13)} Resolve</button>` 
-                                        : `<span style="color: var(--text-muted); font-size: 11px;">Closed</span>`}
+                                        : `<span style="color: var(--text-muted); font-size: 11px;">${c.status === 'RESOLVED' ? 'Closed' : 'Under Review'}</span>`}
                                 </td>
                             </tr>
                         `).join('')}
@@ -1558,9 +1908,8 @@ function renderInventoryPanel() {
             <div class="action-toolbar">
                 <div>
                     <h3 class="card-title">Hostel Asset Registry</h3>
-                    <p class="card-subtitle">Room appliances, electrical installations & physical health audits</p>
+                    <p class="card-subtitle">Room appliances, electrical installations &amp; physical health audits</p>
                 </div>
-                ${STORE.currentUser.role === 'ADMIN' ? `<button class="btn btn-primary" onclick="openModal('ADD_ASSET')">${getIconSvg('plus', 14)} Add Asset</button>` : ''}
             </div>
 
             <div class="table-responsive">
@@ -1603,7 +1952,7 @@ function renderNoticePanel() {
         <div class="card-panel">
             <div class="action-toolbar">
                 <div>
-                    <h3 class="card-title">Hostel Circulars & Announcements</h3>
+                    <h3 class="card-title">Hostel Circulars &amp; Announcements</h3>
                     <p class="card-subtitle">Official communications from Warden and Administration</p>
                 </div>
                 ${STORE.currentUser.role !== 'STUDENT' ? `<button class="btn btn-primary" onclick="openModal('ADD_NOTICE')">${getIconSvg('plus', 14)} Post Announcement</button>` : ''}
@@ -1636,7 +1985,11 @@ function renderMessPanel() {
                     <h3 class="card-title">Dining Menu Schedule</h3>
                     <p class="card-subtitle">${escapeHtml(STORE.messMenu.todayDate)}</p>
                 </div>
-                ${STORE.currentUser.role !== 'STUDENT' ? `<button class="btn btn-secondary" onclick="openModal('EDIT_MESS')">${getIconSvg('edit', 14)} Edit Weekly Menu</button>` : ''}
+                ${STORE.currentUser.role !== 'STUDENT' ? `
+                    <button class="btn btn-secondary" onclick="openModal('EDIT_MESS')">
+                        ${getIconSvg('edit', 14)} Edit Dining Menu
+                    </button>
+                ` : ''}
             </div>
 
             <div class="dual-layout">
@@ -1661,10 +2014,35 @@ function renderMessPanel() {
 
         <div class="card-panel">
             <div class="card-header-row">
-                <h3 class="card-title">Student Food Quality Ratings</h3>
-                <button class="btn btn-primary btn-sm" onclick="showToast('Thank you for rating today meal!', 'success')">Submit Meal Rating</button>
+                <div>
+                    <h3 class="card-title">Resident Mess Ratings &amp; Feedback</h3>
+                    <p class="card-subtitle">Student reviews on taste, nutrition, hygiene, and kitchen quality</p>
+                </div>
+                ${STORE.currentUser.role === 'STUDENT' ? `
+                    <button class="btn btn-primary btn-sm" onclick="openModal('FEEDBACK_MESS')">
+                        ${getIconSvg('sparkles', 13)} Submit Meal Rating
+                    </button>
+                ` : ''}
             </div>
-            <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">Average satisfaction score for this week: <b>4.6 / 5.0</b> (Based on 142 student ratings).</p>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 14px;">
+                ${STORE.messFeedbacks.map(fb => `
+                    <div style="background: var(--bg-primary); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                            <div>
+                                <strong>${escapeHtml(fb.studentName)} (${escapeHtml(fb.roomNo)})</strong> &bull;
+                                <span style="color: var(--color-primary); font-weight: 600;">${escapeHtml(fb.meal)}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="badge-pill primary">${escapeHtml(fb.category)}</span>
+                                <span style="color: #f59e0b; font-weight: 700;">${'⭐'.repeat(fb.rating)} (${fb.rating}/5)</span>
+                            </div>
+                        </div>
+                        <p style="font-size: 13px; color: var(--text-primary); margin: 6px 0 0 0;">${escapeHtml(fb.comment)}</p>
+                        <small style="color: var(--text-muted);">${escapeHtml(fb.date)}</small>
+                    </div>
+                `).join('')}
+            </div>
         </div>
     `;
 }
@@ -1963,16 +2341,19 @@ function openModal(type, extraArg) {
         title.innerText = "Record Fee Payment";
         sub.innerText = "Issue receipt and update balance";
         primaryBtn.innerText = "Record Payment";
+        const selectedStuId = extraArg || (STORE.students[0] ? STORE.students[0].id : "");
+        const targetFee = STORE.fees.find(f => f.studentId === selectedStuId);
+        const defaultDue = targetFee ? targetFee.due : 20000;
         body.innerHTML = `
             <div class="form-group">
                 <label class="form-label">Select Student</label>
-                <select id="m-fstudent" class="form-control">
-                    ${STORE.students.map(s => `<option value="${s.id}">${escapeHtml(s.name)} (${escapeHtml(s.roll)} - ${escapeHtml(s.roomNo)})</option>`).join('')}
+                <select id="m-fstudent" class="form-control" onchange="const f = STORE.fees.find(x => x.studentId === this.value); if (f) document.getElementById('m-famount').value = f.due;">
+                    ${STORE.students.map(s => `<option value="${s.id}" ${s.id === selectedStuId ? 'selected' : ''}>${escapeHtml(s.name)} (${escapeHtml(s.roll)} - ${escapeHtml(s.roomNo)})</option>`).join('')}
                 </select>
             </div>
             <div class="form-group">
                 <label class="form-label">Payment Amount (₹)</label>
-                <input type="number" id="m-famount" class="form-control" value="20000" required>
+                <input type="number" id="m-famount" class="form-control" value="${defaultDue}" required>
             </div>
             <div class="form-group">
                 <label class="form-label">Payment Mode</label>
@@ -2099,6 +2480,157 @@ function openModal(type, extraArg) {
                 <input type="password" id="m-u-pass" class="form-control" value="pass123" required>
             </div>
         `;
+    } else if (type === "ALLOCATE_ROOM") {
+        title.innerText = "Allocate Hostel Bed";
+        sub.innerText = "Assign a registered resident to a room and bed";
+        primaryBtn.innerText = "Confirm Bed Allocation";
+        body.innerHTML = `
+            <div class="form-group">
+                <label class="form-label">Select Student</label>
+                <select id="m-alloc-student" class="form-control">
+                    ${STORE.students.map(s => `<option value="${s.id}">${escapeHtml(s.name)} (${escapeHtml(s.roll)}) - Current: ${escapeHtml(s.roomNo || 'None')}</option>`).join('')}
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Destination Room &amp; Wing</label>
+                <select id="m-alloc-room" class="form-control">
+                    ${STORE.rooms.map(r => `<option value="${r.roomNo}">${escapeHtml(r.roomNo)} - ${escapeHtml(r.block)} (${formatEnumLabel(r.type)}, Occupancy: ${r.occupied}/${r.capacity})</option>`).join('')}
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Bed Assignment</label>
+                <select id="m-alloc-bed" class="form-control">
+                    <option value="Bed-A">Bed-A (Window)</option>
+                    <option value="Bed-B">Bed-B (Corridor)</option>
+                    <option value="Bed-C">Bed-C (Inner)</option>
+                </select>
+            </div>
+        `;
+    } else if (type === "TRANSFER_ROOM") {
+        const targetRoom = extraArg || "A-101";
+        title.innerText = "Transfer / Reassign Bed";
+        sub.innerText = `Reassign residents in ${escapeHtml(targetRoom)}`;
+        primaryBtn.innerText = "Transfer Resident";
+        body.innerHTML = `
+            <div class="form-group">
+                <label class="form-label">Select Resident</label>
+                <select id="m-trans-student" class="form-control">
+                    ${STORE.students.map(s => `<option value="${s.id}">${escapeHtml(s.name)} (${escapeHtml(s.roll)}) - Currently in ${escapeHtml(s.roomNo)}</option>`).join('')}
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">New Room Allocation</label>
+                <select id="m-trans-room" class="form-control">
+                    ${STORE.rooms.map(r => `<option value="${r.roomNo}">${escapeHtml(r.roomNo)} - ${escapeHtml(r.block)} (${formatEnumLabel(r.type)})</option>`).join('')}
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">New Bed</label>
+                <select id="m-trans-bed" class="form-control">
+                    <option value="Bed-A">Bed-A</option>
+                    <option value="Bed-B">Bed-B</option>
+                </select>
+            </div>
+        `;
+    } else if (type === "ALLOCATE_EVENT") {
+        title.innerText = "Allocate Event Space / Seminar Hall";
+        sub.innerText = "Reserve campus common halls, seminar spaces, or outdoor lawn";
+        primaryBtn.innerText = "Confirm Event Allocation";
+        body.innerHTML = `
+            <div class="form-group">
+                <label class="form-label">Event / Activity Title</label>
+                <input type="text" id="m-ev-title" class="form-control" placeholder="e.g. Campus Solar &amp; Green Energy Workshop" value="Clean Campus &amp; Solar Living Talk" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Event Space / Venue</label>
+                <select id="m-ev-venue" class="form-control">
+                    <option value="Hostel Seminar Hall (Block A)">Hostel Seminar Hall (Block A)</option>
+                    <option value="Multipurpose Amphitheatre">Multipurpose Amphitheatre</option>
+                    <option value="Green Campus Lawn">Green Campus Lawn</option>
+                    <option value="Indoor Recreation Hub">Indoor Recreation Hub</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Organizing Committee / Club</label>
+                <input type="text" id="m-ev-org" class="form-control" value="Student Green Council" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Event Date</label>
+                <input type="date" id="m-ev-date" class="form-control" value="2026-09-28" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Time Slot</label>
+                <input type="text" id="m-ev-time" class="form-control" value="04:30 PM - 06:30 PM" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Expected Attendees</label>
+                <input type="number" id="m-ev-attendees" class="form-control" value="45" required>
+            </div>
+        `;
+    } else if (type === "EDIT_MESS") {
+        title.innerText = "Edit Dining / Mess Menu";
+        sub.innerText = "Update dishes, meal sessions, and dietary timings";
+        primaryBtn.innerText = "Update Menu";
+        body.innerHTML = `
+            <div class="form-group">
+                <label class="form-label">Schedule Date / Day Label</label>
+                <input type="text" id="m-menu-date" class="form-control" value="${escapeHtml(STORE.messMenu.todayDate)}" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Breakfast (7:30 AM - 9:30 AM)</label>
+                <textarea id="m-menu-breakfast" class="form-control" rows="2" required>${escapeHtml(STORE.messMenu.breakfast)}</textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Lunch (12:30 PM - 2:30 PM)</label>
+                <textarea id="m-menu-lunch" class="form-control" rows="2" required>${escapeHtml(STORE.messMenu.lunch)}</textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Evening Snacks (5:00 PM - 6:00 PM)</label>
+                <textarea id="m-menu-snacks" class="form-control" rows="2" required>${escapeHtml(STORE.messMenu.snacks)}</textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Dinner (7:30 PM - 9:30 PM)</label>
+                <textarea id="m-menu-dinner" class="form-control" rows="2" required>${escapeHtml(STORE.messMenu.dinner)}</textarea>
+            </div>
+        `;
+    } else if (type === "FEEDBACK_MESS") {
+        title.innerText = "Submit Dining / Mess Feedback";
+        sub.innerText = "Rate meal taste, cleanliness, and food quality";
+        primaryBtn.innerText = "Submit Feedback";
+        body.innerHTML = `
+            <div class="form-group">
+                <label class="form-label">Meal Session</label>
+                <select id="m-fb-meal" class="form-control">
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Evening Snacks">Evening Snacks</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Star Rating</label>
+                <select id="m-fb-rating" class="form-control">
+                    <option value="5">⭐⭐⭐⭐⭐ (5 - Exceptional)</option>
+                    <option value="4">⭐⭐⭐⭐ (4 - Very Good)</option>
+                    <option value="3">⭐⭐⭐ (3 - Average)</option>
+                    <option value="2">⭐⭐ (2 - Needs Improvement)</option>
+                    <option value="1">⭐ (1 - Unsatisfactory)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Category</label>
+                <select id="m-fb-cat" class="form-control">
+                    <option value="Taste &amp; Food Quality">Taste &amp; Food Quality</option>
+                    <option value="Hygiene &amp; Cleanliness">Hygiene &amp; Cleanliness</option>
+                    <option value="Portion Size">Portion Size</option>
+                    <option value="Service &amp; Staff">Service &amp; Staff</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Comments &amp; Suggestions</label>
+                <textarea id="m-fb-comment" class="form-control" rows="3" placeholder="Share your experience about food quality, freshness or taste..." required>The food was fresh and warm. Dal and sabzi had great flavor today.</textarea>
+            </div>
+        `;
     }
 }
 
@@ -2186,16 +2718,34 @@ function submitActiveModal() {
         const amount = parseFloat(document.getElementById("m-famount").value);
         const stu = STORE.students.find(s => s.id === stuId);
 
-        const fee = STORE.fees.find(f => f.studentId === stuId);
+        let fee = STORE.fees.find(f => f.studentId === stuId);
         if (fee) {
             fee.paid += amount;
             fee.due = Math.max(0, fee.amount - fee.paid);
             fee.status = fee.due === 0 ? "PAID" : "PARTIAL";
+        } else if (stu) {
+            fee = {
+                id: `FEE-0${STORE.fees.length + 1}`,
+                studentId: stu.id,
+                studentName: stu.name,
+                roomNo: stu.roomNo || "Unassigned",
+                amount: amount,
+                paid: amount,
+                due: 0,
+                status: "PAID",
+                term: "Fall 2026",
+                dueDate: "2026-08-30"
+            };
+            STORE.fees.push(fee);
         }
+        saveFeesToStorage();
 
-        dispatchAppEvent("FEE_PAID", { studentName: stu.name, amount });
+        dispatchAppEvent("FEE_PAID", { studentName: stu ? stu.name : "Resident", amount });
         closeModal();
-        showToast(`Recorded payment of ₹${amount.toLocaleString()} for ${stu.name}.`, "success");
+        if (document.getElementById("content-area")) {
+            document.getElementById("content-area").innerHTML = getModuleHtml(currentModuleId);
+        }
+        showToast(`Recorded payment of ₹${amount.toLocaleString()} for ${stu ? stu.name : "Resident"}.`, "success");
     } else if (activeModalType === "APPLY_LEAVE") {
         const fromDate = document.getElementById("m-lfrom").value;
         const toDate = document.getElementById("m-lto").value;
@@ -2203,8 +2753,8 @@ function submitActiveModal() {
 
         const newLeave = {
             id: `LV-${100 + STORE.leaves.length + 1}`,
-            studentId: "STU-1001",
-            studentName: "Aarav Sharma",
+            studentId: (STORE.currentUser && STORE.currentUser.studentId) ? STORE.currentUser.studentId : "STU-1001",
+            studentName: STORE.currentUser.fullName || "Aarav Sharma",
             roomNo: "A-101",
             fromDate, toDate, reason,
             status: "PENDING",
@@ -2215,6 +2765,9 @@ function submitActiveModal() {
 
         dispatchAppEvent("LEAVE_APPLIED", newLeave);
         closeModal();
+        if (document.getElementById("content-area")) {
+            document.getElementById("content-area").innerHTML = getModuleHtml(currentModuleId);
+        }
         showToast("Leave application submitted to warden.", "success");
     } else if (activeModalType === "LOG_COMPLAINT") {
         const category = document.getElementById("m-ccat").value;
@@ -2234,6 +2787,9 @@ function submitActiveModal() {
 
         dispatchAppEvent("COMPLAINT_LOGGED", newCmp);
         closeModal();
+        if (document.getElementById("content-area")) {
+            document.getElementById("content-area").innerHTML = getModuleHtml(currentModuleId);
+        }
         showToast("Maintenance ticket logged.", "success");
     } else if (activeModalType === "VISITOR_CHECKIN") {
         const name = document.getElementById("m-vname").value;
@@ -2253,6 +2809,9 @@ function submitActiveModal() {
 
         dispatchAppEvent("VISITOR_CHECKIN", newVis);
         closeModal();
+        if (document.getElementById("content-area")) {
+            document.getElementById("content-area").innerHTML = getModuleHtml(currentModuleId);
+        }
         showToast(`Visitor pass ${newVis.passNo} issued for ${name}.`, "success");
     } else if (activeModalType === "ADD_NOTICE") {
         const title = document.getElementById("m-ntitle").value;
@@ -2270,7 +2829,113 @@ function submitActiveModal() {
 
         dispatchAppEvent("NOTICE_POSTED", newNotice);
         closeModal();
+        if (document.getElementById("content-area")) {
+            document.getElementById("content-area").innerHTML = getModuleHtml(currentModuleId);
+        }
         showToast("Notice circular published.", "success");
+    } else if (activeModalType === "ALLOCATE_ROOM") {
+        const studentId = document.getElementById("m-alloc-student").value;
+        const roomNo = document.getElementById("m-alloc-room").value;
+        const bed = document.getElementById("m-alloc-bed").value;
+        const stu = STORE.students.find(s => s.id === studentId);
+        if (stu) {
+            stu.roomNo = roomNo;
+            stu.bed = bed;
+            saveStudentsToStorage();
+        }
+        const rm = STORE.rooms.find(r => r.roomNo === roomNo);
+        if (rm) {
+            rm.occupied = Math.min(rm.capacity, rm.occupied + 1);
+            rm.status = rm.occupied >= rm.capacity ? "OCCUPIED" : "PARTIALLY_OCCUPIED";
+        }
+        dispatchAppEvent("ROOM_ALLOCATED", { studentName: stu ? stu.name : "Student", roomNo, bed });
+        closeModal();
+        if (document.getElementById("content-area")) {
+            document.getElementById("content-area").innerHTML = getModuleHtml(currentModuleId);
+        }
+        showToast(`Bed ${bed} in Room ${roomNo} allocated to ${stu ? stu.name : "resident"}!`, "success");
+    } else if (activeModalType === "TRANSFER_ROOM") {
+        const studentId = document.getElementById("m-trans-student").value;
+        const newRoom = document.getElementById("m-trans-room").value;
+        const newBed = document.getElementById("m-trans-bed").value;
+        const stu = STORE.students.find(s => s.id === studentId);
+        if (stu) {
+            stu.roomNo = newRoom;
+            stu.bed = newBed;
+            saveStudentsToStorage();
+        }
+        dispatchAppEvent("ROOM_TRANSFERRED", { studentName: stu ? stu.name : "Student", newRoom, newBed });
+        closeModal();
+        if (document.getElementById("content-area")) {
+            document.getElementById("content-area").innerHTML = getModuleHtml(currentModuleId);
+        }
+        showToast(`Resident ${stu ? stu.name : "Student"} transferred to Room ${newRoom} (${newBed}).`, "success");
+    } else if (activeModalType === "ALLOCATE_EVENT") {
+        const title = document.getElementById("m-ev-title").value.trim();
+        const venue = document.getElementById("m-ev-venue").value;
+        const organizer = document.getElementById("m-ev-org").value.trim();
+        const date = document.getElementById("m-ev-date").value;
+        const timeSlot = document.getElementById("m-ev-time").value.trim();
+        const attendees = parseInt(document.getElementById("m-ev-attendees").value) || 30;
+
+        const newEvent = {
+            id: `EVT-2024-00${STORE.events.length + 1}`,
+            title, venue, organizer, date, timeSlot,
+            status: "CONFIRMED",
+            allocatedBy: STORE.currentUser.fullName,
+            attendees
+        };
+        STORE.events.unshift(newEvent);
+        saveEventsToStorage();
+
+        dispatchAppEvent("EVENT_ALLOCATED", newEvent);
+        closeModal();
+        if (document.getElementById("content-area")) {
+            document.getElementById("content-area").innerHTML = getModuleHtml(currentModuleId);
+        }
+        showToast(`Event space "${venue}" allocated for ${title}!`, "success");
+    } else if (activeModalType === "EDIT_MESS") {
+        const todayDate = document.getElementById("m-menu-date").value.trim();
+        const breakfast = document.getElementById("m-menu-breakfast").value.trim();
+        const lunch = document.getElementById("m-menu-lunch").value.trim();
+        const snacks = document.getElementById("m-menu-snacks").value.trim();
+        const dinner = document.getElementById("m-menu-dinner").value.trim();
+
+        STORE.messMenu = { todayDate, breakfast, lunch, snacks, dinner };
+        saveMessMenuToStorage();
+
+        closeModal();
+        if (document.getElementById("content-area")) {
+            document.getElementById("content-area").innerHTML = getModuleHtml(currentModuleId);
+        }
+        showToast("Mess dining menu updated successfully!", "success");
+    } else if (activeModalType === "FEEDBACK_MESS") {
+        const meal = document.getElementById("m-fb-meal").value;
+        const rating = parseInt(document.getElementById("m-fb-rating").value);
+        const category = document.getElementById("m-fb-cat").value;
+        const comment = document.getElementById("m-fb-comment").value.trim();
+
+        const sId = (STORE.currentUser && STORE.currentUser.studentId) ? STORE.currentUser.studentId : "STU-1001";
+        const stu = STORE.students.find(s => s.id === sId) || STORE.students[0];
+
+        const newFeedback = {
+            id: `MFB-00${STORE.messFeedbacks.length + 1}`,
+            studentName: STORE.currentUser.fullName || stu.name,
+            roomNo: stu.roomNo || "A-101",
+            meal,
+            rating,
+            category,
+            comment,
+            date: "Today"
+        };
+        STORE.messFeedbacks.unshift(newFeedback);
+        saveMessFeedbacksToStorage();
+
+        closeModal();
+        if (document.getElementById("content-area")) {
+            document.getElementById("content-area").innerHTML = getModuleHtml(currentModuleId);
+        }
+        showToast("Thank you! Your mess review has been submitted.", "success");
     }
 }
 
@@ -2494,6 +3159,7 @@ function processRazorpayPayment() {
         fee.paid += payAmount;
         fee.due = 0;
         fee.status = "PAID";
+        saveFeesToStorage();
 
         dispatchAppEvent("FEE_PAID", { studentName: fee.studentName, amount: payAmount });
 

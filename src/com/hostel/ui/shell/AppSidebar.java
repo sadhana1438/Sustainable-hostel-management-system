@@ -121,7 +121,7 @@ public class AppSidebar extends JPanel {
 
         if (role == User.Role.ADMIN) {
             list.add(new NavItem("STUDENTS", "Student Management", "🎓"));
-            list.add(new NavItem("ROOMS", "Room Allocation", "🏢"));
+            list.add(new NavItem("ROOMS", "Bed Allocation", "🛏"));
             list.add(new NavItem("FEES", "Hostel Fee Mgmt", "💳"));
             list.add(new NavItem("VISITORS", "Visitor Management", "👥"));
             list.add(new NavItem("LEAVES", "Leave Management", "🗓"));
@@ -135,7 +135,8 @@ public class AppSidebar extends JPanel {
             list.add(new NavItem("SETTINGS", "System Settings", "⚙"));
         } else if (role == User.Role.WARDEN) {
             list.add(new NavItem("STUDENTS", "Student Directory", "🎓"));
-            list.add(new NavItem("ROOMS", "Room Allocation", "🏢"));
+            list.add(new NavItem("ROOMS", "Bed Allocation", "🛏"));
+            list.add(new NavItem("FEES", "Hostel Fee Mgmt", "💳"));
             list.add(new NavItem("VISITORS", "Visitor Management", "👥"));
             list.add(new NavItem("LEAVES", "Leave Requests", "🗓"));
             list.add(new NavItem("COMPLIANCE", "Compliance & Maint", "🛠"));

@@ -78,7 +78,7 @@ public class RoomAllocationPanel extends JPanel {
         titleGrp.setLayout(new BoxLayout(titleGrp, BoxLayout.Y_AXIS));
         titleGrp.setOpaque(false);
 
-        JLabel title = new JLabel("Room Allocation & Capacity Manager");
+        JLabel title = new JLabel("Bed Allocation & Capacity Manager");
         title.setFont(UITheme.FONT_TITLE);
         title.setForeground(UITheme.TEXT_MAIN);
 

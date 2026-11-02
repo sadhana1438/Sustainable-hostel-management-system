@@ -89,12 +89,6 @@ public class InventoryAssetPanel extends JPanel {
         titleGrp.add(Box.createVerticalStrut(2));
         titleGrp.add(sub);
 
-        if (isAdmin) {
-            CustomButton addBtn = new CustomButton("+ Add New Asset", CustomButton.Variant.PRIMARY);
-            addBtn.addActionListener(e -> openAddAssetDialog());
-            panel.add(addBtn, BorderLayout.EAST);
-        }
-
         panel.add(titleGrp, BorderLayout.WEST);
         return panel;
     }

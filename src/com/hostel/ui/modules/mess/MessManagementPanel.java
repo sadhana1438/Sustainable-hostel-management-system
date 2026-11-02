@@ -338,7 +338,13 @@ public class MessManagementPanel extends JPanel {
 
         DatabaseManager db = DatabaseManager.getInstance();
         Student student = db.getStudentByStudentId(currentUser.getStudentId());
-        if (student == null) student = db.getAllStudents().get(0);
+        if (student == null) {
+            java.util.List<Student> allStus = db.getAllStudents();
+            if (!allStus.isEmpty()) student = allStus.get(0);
+        }
+        if (student == null) {
+            student = new Student(1, "STU-2024-001", currentUser.getFullName(), "Computer Science", "3rd Year", "+91 98765 43210", currentUser.getEmail(), "", "", "O+", 1, "A-101", "A Block", Student.Status.ACTIVE, "2024-08-01");
+        }
 
         CustomComboBox<String> mealC = new CustomComboBox<>(new String[]{"Breakfast", "Lunch", "Evening Snacks", "Dinner"});
         CustomComboBox<String> ratingC = new CustomComboBox<>(new String[]{"⭐⭐⭐⭐⭐ (5 - Exceptional)", "⭐⭐⭐⭐ (4 - Very Good)", "⭐⭐⭐ (3 - Average)", "⭐⭐ (2 - Below Par)", "⭐ (1 - Unacceptable)"});
